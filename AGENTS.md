@@ -43,3 +43,18 @@ The live user password is `live` (live-config default). Evidence logs live in
 - ISO and live-build work dirs are gitignored; never commit the ISO.
 - Keep branding placeholders (`example.org`) until real URLs exist.
 - Any content posted to external services must note it was AI-generated.
+
+## Auto-login
+`config/hooks/live/0100-deepblue-branding.hook.chroot` sets
+`autologin-user=deepblue` in `/etc/lightdm/lightdm.conf.d/60-deepblue.conf`.
+Debian's `lightdm-autologin` PAM stack uses `pam_permit.so`, so no
+`nopasswdlogin` group is needed. Verified: boots straight into LXQt.
+
+## live-build rebuild gotchas
+- `lb build` silently reuses cached stage files in `.build/` and will NOT pick
+  up hook changes if stages look current. To force hooks to re-run, remove the
+  relevant stages (`sudo rm -rf .build/chroot_hooks .build/binary_*`) or run
+  `lb clean` — but keep `cache/` to stay fast.
+- Do NOT delete `.build/config`: `lb build` then fails with
+  `the following stage is required to be done first: config`. Re-run `lb config`
+  (exactly as in `build.sh`) if you do.

@@ -17,6 +17,8 @@ to a smaller, reproducible scale.
 - **Display manager:** LightDM
 - **Boot:** hybrid ISO — boots on both BIOS and UEFI machines
 - **Live user:** `deepblue` (password `live`, member of `sudo`)
+- **Auto-login:** the live session boots straight into the LXQt desktop,
+  no login prompt (Deepin-live style)
 - **Branding:** custom `/etc/os-release`, `/etc/lsb-release`, TTY banner,
   wallpaper, logo, boot splash and a live-session welcome message
 
@@ -103,6 +105,22 @@ DeepBlue Linux 1.0 (Cobalt)
 Base: Debian GNU/Linux trixie
 Desktop: LXQt
 ```
+
+- `docs/gui-session-test.log` — confirms the graphical session actually comes
+  up: `lightdm` active, `Xorg :0` running, and a full LXQt desktop
+  (`lxqt-session`, `lxqt-panel`, `openbox`, `pcmanfm-qt`, …) running as
+  `deepblue` via auto-login.
+
+## Build timing
+
+On a 4-vCPU sandbox with no KVM (QEMU TCG):
+
+| Scenario                        | Duration |
+| ------------------------------- | -------- |
+| First build, empty apt cache    | ~12.5 min |
+| Rebuild, warm apt cache         | ~8.5 min  |
+
+The long pole is `mksquashfs -comp xz` compressing the ~1.3 GB root filesystem.
 
 ## Extending
 

@@ -1,0 +1,22 @@
+deepblue@deepblue:~$ echo GUI_CHECK_START; systemctl is-active lightdm; pgrep -a Xorg || echo NO_XORG; pgrep -a lxqt-session || echo NO_LXQT_SESSION; ps -u deepblue -o comm= | sort -u; echo GUI_CHECK_END
+GUI_CHECK_START
+active
+1114 /usr/lib/xorg/Xorg :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+1166 lxqt-session
+bash
+dbus-daemon
+lxqt-globalkeys
+lxqt-notificati
+lxqt-panel
+lxqt-policykit-
+lxqt-powermanag
+lxqt-runner
+lxqt-session
+nm-tray
+openbox
+pcmanfm-qt
+ps
+(sd-pam)
+sort
+systemd
+GUI_CHECK_END

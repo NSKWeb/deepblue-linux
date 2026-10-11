@@ -34,12 +34,14 @@ REL
 mkdir -p /etc/X11
 echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
 
-# --- LightDM: DeepBlue branding ---
+# --- LightDM: DeepBlue branding + auto-login into LXQt ---
 mkdir -p /etc/lightdm/lightdm.conf.d
 cat > /etc/lightdm/lightdm.conf.d/60-deepblue.conf <<'LDM'
 [Seat:*]
 greeter-session=lightdm-gtk-greeter
 user-session=lxqt
+autologin-user=deepblue
+autologin-user-timeout=0
 LDM
 
 # --- LXQt: set wallpaper for the live user ---
