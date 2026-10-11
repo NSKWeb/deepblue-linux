@@ -1,0 +1,10 @@
+PRETTY_NAME="DeepBlue Linux 1.0"
+NAME="DeepBlue Linux"
+VERSION_ID="1.0"
+VERSION="1.0 (Cobalt)"
+VERSION_CODENAME=cobalt
+ID=deepblue
+ID_LIKE=debian
+HOME_URL="https://example.org/deepblue"
+SUPPORT_URL="https://example.org/deepblue/support"
+BUG_REPORT_URL="https://example.org/deepblue/bugs"
