@@ -61,7 +61,7 @@ sudo dd if=DeepBlue-Linux-1.0-amd64.iso of=/dev/sdX bs=4M status=progress oflag=
 
 1. Plug the stick into the machine and **reboot**.
 2. Open the **boot menu** — usually `F12`, `F10`, `F9`, `Esc`, or `Del` during the splash.
-3. Pick the USB entry. On a **UEFI** machine you may need to disable Secure Boot once (the image is not Secure-Boot signed).
+3. Pick the USB entry. On a **UEFI** machine you can leave **Secure Boot enabled** — the image is signed through Debian's Microsoft-signed `shim` (see [Secure Boot](docs/SECURE-BOOT.md)).
 
 The boot menu offers three ways in:
 
@@ -423,7 +423,7 @@ so you do not have to.
 | Layer | What it does | Where it lives |
 | --- | --- | --- |
 | **Signed packages** | `apt` refuses any package not signed by the DeepBlue key | [`repo/`](repo/) · `deepblue-archive-keyring` |
-| **Secure Boot** | Firmware refuses an unsigned bootloader/kernel (opt-in — see below) | [planned](docs/SECURE-BOOT.md) |
+| **Secure Boot** | Firmware refuses an unsigned bootloader/kernel — enabled via Debian's signed `shim` | [`build.sh`](build.sh) · [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md) |
 | **Firewall + AppArmor** | Default-deny inbound traffic; per-program confinement | [`pkg/deepblue-security`](pkg/deepblue-security) |
 | **Timely updates** | Debian security fixes install themselves, daily | [`pkg/deepblue-security`](pkg/deepblue-security) |
 | **Disk encryption** | A stolen machine's disk is unreadable | [`config/includes.installer/preseed.cfg`](config/includes.installer/preseed.cfg) |
@@ -464,15 +464,21 @@ encrypted disk. The passphrase is **never** preseeded — you are asked for it,
 and only you know it. (Preseeding a disk passphrase would store it in plaintext
 on the ISO, which defeats the point.)
 
-### 5 · Secure Boot — the honest status
+### 5 · Secure Boot — on by default
 
-The 1.0 ISO is **not** Secure-Boot signed, so on a UEFI machine you disable
-Secure Boot once to boot it. Fixing this properly has three routes, documented
-in [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md): reuse Debian's
-Microsoft-signed `shim` (cheap, no approval, planned next), a per-machine
-**MOK** for custom kernels, or your own **Microsoft-signed shim** (needs an EV
-certificate — the full-ownership end goal). Secure Boot stops bootkits; it does
-not replace disk encryption, and this project is explicit about the difference.
+The 1.0 ISO boots **with Secure Boot enabled** on UEFI machines. live-build's
+EFI stage puts Debian's Microsoft-signed `shim` at `EFI/BOOT/BOOTX64.EFI` and
+Debian-signed GRUB behind it, so the firmware's default trust in Microsoft's
+UEFI CA is enough to boot DeepBlue — no trip to the firmware setup menu. The
+build guarantees this: `build.sh` passes `--uefi-secure-boot enable`, which
+fails the build rather than silently shipping an unsigned image.
+
+The honest caveat: the chain terminates in **Debian's** key, not DeepBlue's.
+That is the correct trade for a Debian-based distro, but it means a
+*DeepBlue-built* custom kernel needs a Machine Owner Key to be trusted — the
+next step, and a full own-shim route (with an EV certificate) after that. All
+three routes, and what Secure Boot does and does not protect against, are in
+[`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md).
 
 > [!NOTE]
 > These controls live on the **installed** system. The live session is a
@@ -508,6 +514,7 @@ Everything below was exercised on the built image (evidence in [`docs/`](docs/))
 | Size | ~1.86 GB (live + installer) |
 | Volume label | `DEEPBLUE` |
 | Boot records | El Torito **BIOS** (`isolinux`) + **UEFI** (`grub`) |
+| Secure Boot | **Enabled** — Debian-signed `shim` + GRUB |
 | Live user | `deepblue` / `live` |
 | Hostname | `deepblue` |
 
@@ -608,7 +615,8 @@ The live user password is `live`. Evidence logs live in [`docs/`](docs/).
 - [x] Interactive desktop preview page ([`docs/preview.html`](docs/preview.html))
 - [x] Keep the ISO under GitHub's 2 GB release limit (~1.86 GB) with a documented trim pass
 - [x] Security defaults: default-deny nftables firewall, automatic security updates, AppArmor, kernel hardening, encrypted-disk installer default
-- [ ] Secure Boot: wire in Debian's Microsoft-signed `shim` (Option A in [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md))
+- [x] Secure Boot: boot with Secure Boot enabled via Debian's Microsoft-signed `shim` (Option A in [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md))
+- [ ] Secure Boot: MOK flow for self-built kernels (Option B)
 - [ ] Custom installer branding
 - [ ] A `deepblue-meta` metapackage to pull in the default desktop set
 

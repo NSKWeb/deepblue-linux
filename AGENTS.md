@@ -209,3 +209,24 @@ Debian installer's *defaults* — encrypted LVM partitioning, no root login,
 `debconf-set-selections -c config/includes.installer/preseed.cfg`. Never
 preseed a disk passphrase: it would be stored in plaintext on the ISO.
 
+### Secure Boot (UEFI)
+live-build has native Secure Boot support — no ISO surgery needed.
+`scripts/build/binary_grub-efi` checks for `shim-signed` and
+`grub-efi-amd64-signed` in the chroot and, when present, writes shim to
+`EFI/BOOT/BOOTX64.EFI`, Debian-signed GRUB to `grubx64.efi`, and MokManager to
+`mmx64.efi`. Two things are required:
+
+* the packages in `config/package-lists/deepblue.list.chroot` — listed
+  explicitly because `--apt-recommends false` means the Recommends chain
+  (`grub-efi-amd64-bin` → `grub-efi-amd64-signed` → `shim-signed`) is not
+  followed;
+* `--uefi-secure-boot enable` in `build.sh`. `enable` makes live-build error
+  out if the shim is missing; the default `auto` silently falls back to an
+  unsigned image, which is the failure mode to avoid. (`LB_UEFI_SECURE_BOOT`
+  defaults to `auto`; `LB_BOOTLOADER_EFI` defaults to `grub-efi`.)
+
+Verify the result by extracting `EFI/BOOT/BOOTX64.EFI` from the ISO and
+running `sbverify --list` on it — it should show a Microsoft UEFI CA signature.
+The chain ends in Debian's key, so a self-built kernel needs a MOK; see
+`docs/SECURE-BOOT.md`.
+
