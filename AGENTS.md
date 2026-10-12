@@ -127,9 +127,25 @@ Then verify the payload actually made it in:
 ### Release size limit (GitHub 2 GB)
 GitHub release assets must be **< 2 GiB per file**. A full Debian live ISO with
 firmware + the debian installer lands around 2.05 GiB, over the limit. The
-branding hook trims to fit: drop unused Bibata cursor variants, non-`en` locale
-catalogs, and the `netronome` NIC firmware. Keep the ISO under 2 GiB when
-adding packages.
+branding hook (`0100-deepblue-branding.hook.chroot`) trims to fit, taking the
+ISO to ~1.86 GiB: APT lists/caches, CJK + obscure-script Noto fonts, legacy X11
+fonts, `Papirus-Light`, documentation bodies (each package keeps its
+`copyright`), unused Bibata cursor variants, non-`en` locale catalogs, and the
+`netronome` NIC firmware. Keep the ISO under 2 GiB when adding packages.
+
+Two gotchas found while trimming:
+
+* **`--loadlin false` is required** (`build.sh`). live-build's `binary_loadlin`
+  stage copies `chroot/usr/share/doc/loadlin/manual.txt.gz` into the image; the
+  doc trim removes that file and the build then fails at `binary_loadlin`. The
+  legacy DOS loader is useless for a BIOS+UEFI ISO anyway.
+* **Trim `usr/share/doc` by file, not by directory.** `rm -rf` on package doc
+  dirs can remove `copyright` (needed for licence compliance). The hook keeps
+  one `copyright` per package.
+
+If you re-trim by hand on an existing build tree, remember the files are
+**root-owned** — the chroot dirs need `sudo`; a plain `rm` silently fails
+(exit 1) and the next `lb build` reuses the untrimmed chroot.
 
 ### Verifying the desktop headlessly
 Boot the ISO under QEMU with a VGA adapter and a monitor socket, then take a

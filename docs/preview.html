@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeepBlue Linux — Desktop Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss:#04101f;--deep:#071c3d;--navy:#0a2e5b;--blue:#0f437b;--azure:#1c6fd6;--sky:#7fb2ff;--ice:#dbeaff;--muted:#8fa9cf;
+  --line:rgba(127,178,255,.14);--glass:rgba(219,234,255,.045);
+  --font-d:"Bricolage Grotesque",system-ui,sans-serif;--font-b:"Manrope",system-ui,sans-serif;--font-m:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--abyss);color:var(--ice);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+  radial-gradient(1200px 700px at 78% -10%,rgba(28,111,214,.28),transparent 60%),
+  radial-gradient(900px 600px at 10% 15%,rgba(15,67,123,.30),transparent 60%),
+  radial-gradient(1000px 800px at 50% 120%,rgba(10,46,91,.55),transparent 60%),
+  linear-gradient(180deg,#04101f,#071c3d 55%,#04101f)}
+.aurora{position:fixed;inset:-30%;z-index:-1;filter:blur(80px);opacity:.5;pointer-events:none}
+.aurora i{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:drift 26s ease-in-out infinite}
+.aurora i:nth-child(1){width:46vw;height:46vw;left:8%;top:6%;background:radial-gradient(circle,rgba(28,111,214,.55),transparent 65%)}
+.aurora i:nth-child(2){width:38vw;height:38vw;right:4%;top:30%;background:radial-gradient(circle,rgba(127,178,255,.35),transparent 65%);animation-delay:-9s}
+.aurora i:nth-child(3){width:42vw;height:42vw;left:34%;bottom:-6%;background:radial-gradient(circle,rgba(15,67,123,.6),transparent 65%);animation-delay:-16s}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(4%,-5%,0) scale(1.12)}66%{transform:translate3d(-4%,4%,0) scale(.94)}}
+.grain{position:fixed;inset:0;z-index:9;pointer-events:none;opacity:.055;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:22px;padding:14px clamp(18px,5vw,64px);transition:.35s;border-bottom:1px solid transparent}
+nav.solid{background:rgba(4,16,31,.72);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-d);font-weight:800;font-size:1.05rem;letter-spacing:.2px;margin-right:auto}
+.brand svg{width:30px;height:30px;filter:drop-shadow(0 4px 14px rgba(28,111,214,.55))}
+.brand b{color:var(--sky)}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:.2s}
+nav a:hover{color:var(--ice)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:600;font-size:.88rem;text-decoration:none;transition:.25s;border:1px solid transparent;white-space:nowrap}
+.btn-p{background:linear-gradient(135deg,var(--azure),#0a4fa8);color:#fff;box-shadow:0 8px 26px rgba(28,111,214,.4)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(28,111,214,.6)}
+.btn-g{border-color:var(--line);color:var(--ice);background:var(--glass)}
+.btn-g:hover{border-color:var(--sky);background:rgba(127,178,255,.1)}
+@media(max-width:720px){nav a.hide{display:none}}
+section{padding:clamp(60px,9vw,120px) clamp(18px,5vw,64px);position:relative}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-family:var(--font-m);font-size:.76rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sky);opacity:.85}
+.hero{min-height:92vh;display:flex;align-items:center;padding-top:clamp(30px,6vw,70px)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);align-items:center}
+@media(max-width:940px){.hero .wrap{grid-template-columns:1fr}}
+.hero h1{font-family:var(--font-d);font-weight:800;font-size:clamp(3rem,8.5vw,6.2rem);line-height:.92;letter-spacing:-.03em;margin:20px 0 0}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,#7fb2ff,#1c6fd6 60%,#0a2e5b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{margin-top:22px;font-size:clamp(1.02rem,1.6vw,1.2rem);color:#b9cdea;max-width:34ch}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
+.chip{font-family:var(--font-m);font-size:.74rem;letter-spacing:.04em;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--glass)}
+.cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.cta .btn{padding:13px 26px;font-size:.95rem}
+.frame{position:relative;perspective:1400px}
+.win{transform:rotateY(-7deg) rotateX(3deg);border-radius:16px;overflow:hidden;border:1px solid rgba(127,178,255,.28);
+  box-shadow:0 40px 90px -20px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);background:#050f1e;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.frame:hover .win{transform:rotateY(-2deg) rotateX(1deg)}
+.bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:linear-gradient(180deg,#0b2344,#071a34);border-bottom:1px solid rgba(127,178,255,.12)}
+.bar i{width:11px;height:11px;border-radius:50%;display:block}
+.bar i:nth-child(1){background:#ff5f57}.bar i:nth-child(2){background:#febc2e}.bar i:nth-child(3){background:#28c840}
+.bar span{margin-left:10px;font-family:var(--font-m);font-size:.76rem;color:var(--muted)}
+.win img{display:block;width:100%}
+.glow{position:absolute;inset:8% -6% -8% 6%;background:radial-gradient(circle at 60% 60%,rgba(28,111,214,.5),transparent 60%);filter:blur(60px);z-index:-1}
+.float{position:absolute;background:rgba(7,28,61,.82);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:12px;padding:11px 15px;font-size:.8rem;box-shadow:0 14px 34px rgba(0,0,0,.5);animation:bob 5.5s ease-in-out infinite}
+.float b{display:block;font-family:var(--font-d);font-size:1.15rem;color:var(--sky);line-height:1.1}
+.float small{color:var(--muted);font-size:.72rem}
+.float.a{left:-4%;top:16%;animation-delay:-1s}.float.b{right:-5%;bottom:14%;animation-delay:-3s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@media(max-width:940px){.float{display:none}.win{transform:none}}
+.head{margin-bottom:46px;max-width:62ch}
+.head h2{font-family:var(--font-d);font-weight:800;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.02em;margin-top:14px;line-height:1.05}
+.head p{color:var(--muted);margin-top:14px;font-size:1.02rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:16px}
+.card{position:relative;background:linear-gradient(160deg,rgba(219,234,255,.055),rgba(7,28,61,.5));border:1px solid var(--line);border-radius:16px;padding:24px;overflow:hidden;transition:.35s}
+.card:hover{transform:translateY(-5px);border-color:rgba(127,178,255,.4);box-shadow:0 24px 50px -18px rgba(28,111,214,.5)}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(28,111,214,.16),transparent 55%);opacity:0;transition:.35s}
+.card:hover::after{opacity:1}
+.ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;background:linear-gradient(135deg,rgba(28,111,214,.3),rgba(10,46,91,.5));border:1px solid rgba(127,178,255,.25)}
+.ico svg{width:22px;height:22px;stroke:var(--sky);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-family:var(--font-d);font-size:1.06rem;font-weight:600;margin-bottom:7px}
+.card p{color:var(--muted);font-size:.9rem}
+.boot{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+@media(max-width:880px){.boot{grid-template-columns:1fr}}
+.screen{border-radius:16px;border:1px solid rgba(127,178,255,.22);overflow:hidden;background:#02080f;box-shadow:0 30px 70px -24px rgba(0,0,0,.9)}
+.splash{display:grid;place-items:center;padding:60px 20px;background:radial-gradient(circle at 50% 45%,#0a2e5b,#04101f 70%);position:relative;overflow:hidden}
+.splash::before{content:"";position:absolute;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(28,111,214,.28),transparent 65%);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.1);opacity:.95}}
+.splash .orb{width:84px;height:84px;position:relative;filter:drop-shadow(0 0 26px rgba(28,111,214,.75))}
+.splash p{position:relative;margin-top:20px;font-family:var(--font-d);letter-spacing:.34em;font-size:.8rem;color:var(--sky);text-transform:uppercase}
+.track{position:relative;margin-top:26px;width:190px;height:4px;border-radius:99px;background:rgba(127,178,255,.16);overflow:hidden}
+.track i{position:absolute;inset:0;width:40%;border-radius:99px;background:linear-gradient(90deg,var(--azure),var(--sky));animation:load 2.4s ease-in-out infinite}
+@keyframes load{0%{left:-45%}100%{left:105%}}
+.term{background:#03090f;border-radius:16px;border:1px solid var(--line);padding:20px;font-family:var(--font-m);font-size:.8rem;line-height:1.85;box-shadow:0 30px 70px -24px rgba(0,0,0,.9);min-height:260px}
+.term .t{display:flex;gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.term .t i{width:10px;height:10px;border-radius:50%;background:#1b3a63;display:block}
+.term .t i:first-child{background:#28c840}
+.term .l{white-space:pre-wrap;color:#9db8e0}
+.term .ok{color:#5fd98a}
+.cur{display:inline-block;width:8px;height:15px;background:var(--sky);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.sw{border-radius:14px;padding:20px 18px 16px;min-height:132px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,255,255,.14);cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+.sw:hover{transform:translateY(-5px) scale(1.02)}
+.sw b{font-family:var(--font-m);font-size:.82rem;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.sw small{font-size:.72rem;color:rgba(255,255,255,.8);text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.sw .cp{position:absolute;top:12px;right:12px;font-size:.62rem;font-family:var(--font-m);letter-spacing:.1em;padding:4px 8px;border-radius:99px;background:rgba(0,0,0,.35);color:#fff;opacity:0;transition:.25s}
+.sw:hover .cp{opacity:1}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--glass)}
+.spec{padding:24px;border-right:1px solid var(--line)}
+.spec:last-child{border-right:none}
+.spec b{display:block;font-family:var(--font-d);font-size:1.35rem;color:var(--ice);margin-bottom:4px}
+.spec small{color:var(--muted);font-size:.82rem;font-family:var(--font-m)}
+@media(max-width:720px){.spec{border-right:none;border-bottom:1px solid var(--line)}}
+footer{padding:50px clamp(18px,5vw,64px);border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem}
+footer b{color:var(--sky)}
+footer .brand{justify-content:center;margin:0 auto 14px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="grain"></div>
+
+<nav id="nav">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b8bff"/><stop offset="1" stop-color="#0a2e5b"/></linearGradient>
+      <radialGradient id="g2" cx="0.35" cy="0.3" r="0.85"><stop offset="0" stop-color="#8fc0ff" stop-opacity=".95"/><stop offset="1" stop-color="#1c6fd6" stop-opacity="0"/></radialGradient>
+    </defs>
+      <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#g1)"/>
+      <circle cx="32" cy="31" r="16" fill="url(#g2)"/>
+      <path d="M13 41 Q32 30 51 41" stroke="#dbeaff" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".92"/>
+      <path d="M18 48 Q32 39 46 48" stroke="#dbeaff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+    </svg>
+    Deep<b>Blue</b>
+  </div>
+  <a class="hide" href="#look">Desktop</a>
+  <a class="hide" href="#boot">Boot</a>
+  <a class="hide" href="#palette">Palette</a>
+  <a class="btn btn-g" href="https://github.com/NSKWeb/deepblue-linux" target="_blank" rel="noopener">GitHub</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow rv">Debian trixie · LXQt / Qt6 · amd64</span>
+      <h1 class="rv">Deep<em>Blue</em><br>Linux</h1>
+      <p class="lede rv">A Deepin-flavoured Debian desktop with its own identity, its own signed archive, and a theme that feels finished. Yeh aisa dikhega jab aap PC pe boot ya install karenge.</p>
+      <div class="chips rv">
+        <span class="chip">v1.0 “Cobalt”</span>
+        <span class="chip">ISO ~1.86 GiB</span>
+        <span class="chip">BIOS + UEFI</span>
+        <span class="chip">signed APT archive</span>
+      </div>
+      <div class="cta rv">
+        <a class="btn btn-p" href="https://github.com/NSKWeb/deepblue-linux/releases/latest" target="_blank" rel="noopener">Download ISO</a>
+        <a class="btn btn-g" href="#look">See the desktop ↓</a>
+      </div>
+    </div>
+    <div class="frame rv">
+      <div class="glow"></div>
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span>deepblue@deepblue: ~ — live session</span></div>
+        <img src="deepblue-desktop.png" alt="DeepBlue live desktop: top LXQt panel, DeepBlue wallpaper, bottom Plank dock">
+      </div>
+      <div class="float a"><b>1.86 GiB</b><small>fits GitHub releases</small></div>
+      <div class="float b"><b>BIOS + UEFI</b><small>hybrid bootable</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="look">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">What you get</span>
+      <h2>Stock LXQt nahi — ek poori identity</h2>
+      <p>Har layer rebranded: window style, icons, cursor, dock, login aur boot splash. Neeche wahi cheezein jo live ISO me chal rahi hain.</p>
+    </div>
+    <div class="grid">
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div><h3>Top LXQt Panel</h3><p>Panel upar shift kiya gaya — menu, task list, system tray aur clock, sab DeepBlue QSS me styled.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 17h.01M11 17h.01M15 17h.01"/></svg></div><h3>Plank Dock</h3><p>Bottom me translucent dock — Files, Firefox, QTerminal, Mousepad. picom compositor se real blur.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/><circle cx="7" cy="7" r=".6"/></svg></div><h3>Kvantum “DeepBlue”</h3><p>Qt widget style KvArcDark se recolored — azure highlight, deep-navy base. Native Qt apps ek jaise.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18z"/></svg></div><h3>Papirus-Dark + Bibata</h3><p>Icon theme Papirus-Dark, cursor Bibata-Modern-Ice, aur GTK apps ke liye Arc-Dark.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><h3>Plymouth Splash</h3><p>Branded boot splash — gradient, pulsing logo, progress bar. Boot ke pehle second se identity.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></div><h3>Own Signed Archive</h3><p>deepblue-base packages ek signed APT repo se — dependency graph tumhare control me.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="boot">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">First seconds</span>
+      <h2>Boot se login tak, sab branded</h2>
+      <p>Power on karte hi Plymouth splash, phir slick-greeter login, phir seedha DeepBlue desktop.</p>
+    </div>
+    <div class="boot">
+      <div class="screen rv">
+        <div class="splash">
+          <svg class="orb" viewBox="0 0 64 64" aria-hidden="true"><defs>
+            <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b8bff"/><stop offset="1" stop-color="#0a2e5b"/></linearGradient>
+            <radialGradient id="s2" cx="0.35" cy="0.3" r="0.85"><stop offset="0" stop-color="#8fc0ff" stop-opacity=".95"/><stop offset="1" stop-color="#1c6fd6" stop-opacity="0"/></radialGradient>
+          </defs>
+            <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#s1)"/>
+            <circle cx="32" cy="31" r="16" fill="url(#s2)"/>
+            <path d="M13 41 Q32 30 51 41" stroke="#dbeaff" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".92"/>
+            <path d="M18 48 Q32 39 46 48" stroke="#dbeaff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+          </svg>
+          <p>DeepBlue</p>
+          <div class="track"><i></i></div>
+        </div>
+      </div>
+      <div class="term rv" id="term">
+        <div class="t"><i></i><i></i><i></i></div>
+        <div id="termbody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="palette">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">Colour system</span>
+      <h2>Deep-ocean palette</h2>
+      <p>Yehi asli wallpaper aur theme se liye gaye colours hain. Kisi bhi swatch pe click karke hex copy karo.</p>
+    </div>
+    <div class="pal">
+      <div class="sw rv" style="background:linear-gradient(160deg,#04101f,#071c3d)" data-hex="#04101F"><span class="cp">COPY</span><b>#04101F</b><small>Abyss</small></div>
+      <div class="sw rv" style="background:linear-gradient(160deg,#0a2e5b,#071c3d)" data-hex="#0A2E5B"><span class="cp">COPY</span><b>#0A2E5B</b><small>Deep Navy</small></div>
+      <div class="sw rv" style="background:linear-gradient(160deg,#0f437b,#0a2e5b)" data-hex="#0F437B"><span class="cp">COPY</span><b>#0F437B</b><small>Ocean</small></div>
+      <div class="sw rv" style="background:linear-gradient(160deg,#1c6fd6,#0a4fa8)" data-hex="#1C6FD6"><span class="cp">COPY</span><b>#1C6FD6</b><small>Azure</small></div>
+      <div class="sw rv" style="background:linear-gradient(160deg,#7fb2ff,#1c6fd6)" data-hex="#7FB2FF"><span class="cp">COPY</span><b>#7FB2FF</b><small>Sky</small></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="specs rv">
+      <div class="spec"><b>1.0 “Cobalt”</b><small>release</small></div>
+      <div class="spec"><b>Debian trixie</b><small>base</small></div>
+      <div class="spec"><b>LXQt / Qt6</b><small>desktop</small></div>
+      <div class="spec"><b>amd64</b><small>architecture</small></div>
+      <div class="spec"><b>BIOS + UEFI</b><small>boot</small></div>
+      <div class="spec"><b>~1.86 GiB</b><small>ISO size</small></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><defs>
+      <linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b8bff"/><stop offset="1" stop-color="#0a2e5b"/></linearGradient></defs>
+      <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#f1)"/>
+      <path d="M13 41 Q32 30 51 41" stroke="#dbeaff" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".92"/>
+      <path d="M18 48 Q32 39 46 48" stroke="#dbeaff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+    </svg>
+    Deep<b>Blue</b>
+  </div>
+  <p>DeepBlue Linux 1.0 “Cobalt” · built on Debian · screenshot is a real live-ISO boot, not a mockup.</p>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>24),{passive:true});
+
+const io=new IntersectionObserver((es)=>{
+  es.forEach((e,i)=>{if(e.isIntersecting){e.target.style.transitionDelay=(Math.min(i,6)*70)+'ms';e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');});
+});
+
+document.querySelectorAll('.sw').forEach(s=>{
+  s.addEventListener('click',()=>{const h=s.dataset.hex;
+    navigator.clipboard&&navigator.clipboard.writeText(h).then(()=>{const b=s.querySelector('.cp');b.textContent='COPIED';setTimeout(()=>b.textContent='COPY',1200);}).catch(()=>{});});
+});
+
+// boot log: type plain text, then swap in the coloured final line (keeps tags intact)
+const lines=[
+  {t:'DeepBlue Linux 1.0 "Cobalt" — kernel 6.12.0-deepblue-amd64'},
+  {t:'Loading Debian trixie base ................. [ OK ]',h:'Loading Debian trixie base ................. [ <b class="ok">OK</b> ]'},
+  {t:'Mounting squashfs root ..................... [ OK ]',h:'Mounting squashfs root ..................... [ <b class="ok">OK</b> ]'},
+  {t:'Starting LXQt session (Qt6) ................ [ OK ]',h:'Starting LXQt session (Qt6) ................ [ <b class="ok">OK</b> ]'},
+  {t:'Applying Kvantum style: DeepBlue ........... [ OK ]',h:'Applying Kvantum style: DeepBlue ........... [ <b class="ok">OK</b> ]'},
+  {t:'Launching plank dock + picom compositor .... [ OK ]',h:'Launching plank dock + picom compositor .... [ <b class="ok">OK</b> ]'},
+  {t:'Welcome, deepblue.'}
+];
+const tb=document.getElementById('termbody');
+let li=0;
+function typeLine(){
+  if(li>=lines.length){
+    const c=document.createElement('div');c.className='l';
+    c.innerHTML='deepblue@deepblue:~$ <span class="cur"></span>';tb.appendChild(c);return;
+  }
+  const item=lines[li];const d=document.createElement('div');d.className='l';tb.appendChild(d);
+  let ci=0;
+  (function tick(){
+    d.innerHTML=item.t.slice(0,ci)+'<span class="cur"></span>';
+    ci++;
+    if(ci<=item.t.length){setTimeout(tick,item.t.length>40?6:14);}
+    else{d.innerHTML=item.h||item.t;li++;setTimeout(typeLine,240);}
+  })();
+}
+const tio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){tio.disconnect();setTimeout(typeLine,500);}});},{threshold:.35});
+tio.observe(document.getElementById('term'));
+</script>
+</body>
+</html>

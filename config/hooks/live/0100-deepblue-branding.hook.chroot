@@ -204,6 +204,36 @@ find /usr/share/locale -mindepth 1 -maxdepth 1 -type d ! -name 'en*' \
 # Firmware for enterprise NICs no desktop will ever have.
 rm -rf /usr/lib/firmware/netronome
 
+# --- Size trims: keep the ISO well under GitHub's 2 GiB release limit ---
+# Everything below is either regenerable or unused on a Latin + Arabic desktop.
+
+# APT: no cached .debs, no package lists, no pkgcache (an `apt update` restores them).
+apt-get clean
+rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# Papirus ships Light/Dark/plain; only Papirus-Dark is selected and the other
+# two variants cost ~30 MB. (Papirus-Dark symlinks into Papirus, so Papirus stays.)
+rm -rf /usr/share/icons/Papirus-Light
+
+# CJK fonts (~92 MB) — this desktop ships Latin and Arabic, not Han/Kana/Hangul.
+rm -f /usr/share/fonts/opentype/noto/NotoSansCJK-*.ttc \
+      /usr/share/fonts/opentype/noto/NotoSerifCJK-*.ttc
+
+# Obscure-script Noto faces no desktop UI will ever render.
+rm -f /usr/share/fonts/truetype/noto/NotoSansSignWriting-Regular.ttf \
+      /usr/share/fonts/truetype/noto/NotoSerifTangut-Regular.ttf \
+      /usr/share/fonts/truetype/noto/NotoSansCuneiform-Regular.ttf
+
+# Legacy X11 bitmap / Type1 fonts — modern toolkits use Fontconfig + TrueType.
+rm -rf /usr/share/fonts/X11/misc /usr/share/fonts/X11/100dpi \
+       /usr/share/fonts/X11/75dpi /usr/share/fonts/X11/Type1 \
+       /usr/share/fonts/type1
+
+# Documentation bodies, keeping each package's copyright file for licence compliance.
+find /usr/share/doc -mindepth 1 -maxdepth 1 -type d -exec sh -c '
+  for d do find "$d" -mindepth 1 ! -name copyright -exec rm -rf {} + 2>/dev/null; done
+' sh {} + 2>/dev/null || true
+
 # --- Plymouth: DeepBlue boot splash ---
 mkdir -p /etc/plymouth
 cat > /etc/plymouth/plymouthd.conf <<'PLY'
