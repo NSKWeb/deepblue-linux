@@ -1,17 +1,17 @@
 #!/bin/sh
-# DeepBlue Linux branding hook (runs inside the chroot)
+# DeepBlue Linux branding + Deepin-style desktop theming hook (runs in chroot).
 set -e
 
 USERNAME="deepblue"
+HOME_DIR="/home/${USERNAME}"
 
 # --- Desktop session for the live user ---
-mkdir -p /home/${USERNAME}
-cat > /home/${USERNAME}/.xinitrc <<'XINITRC'
+mkdir -p "${HOME_DIR}"
+cat > "${HOME_DIR}/.xinitrc" <<'XINITRC'
 #!/bin/sh
 exec startlxqt
 XINITRC
-chmod 755 /home/${USERNAME}/.xinitrc
-chown 1000:1000 /home/${USERNAME}/.xinitrc 2>/dev/null || true
+chmod 755 "${HOME_DIR}/.xinitrc"
 
 # --- Welcome message on login ---
 cat > /etc/profile.d/deepblue-welcome.sh <<'WELCOME'
@@ -26,27 +26,270 @@ chmod 755 /etc/profile.d/deepblue-welcome.sh
 mkdir -p /etc/X11
 echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
 
-# --- LightDM: DeepBlue branding + auto-login into LXQt ---
+# =====================================================================
+#  Deepin-style theming
+# =====================================================================
+WALLPAPER="/usr/share/backgrounds/deepblue/wallpaper.png"
+
+# --- Global Qt style: Kvantum (DeepBlue theme) ---
+mkdir -p /etc/xdg/qt5ct /etc/xdg/qt6ct
+cat > /etc/xdg/qt5ct/qt5ct.conf <<'QT5'
+[Appearance]
+style=kvantum
+color_scheme_path=
+custom_palette=false
+icon_theme=Papirus-Dark
+standard_dialogs=default
+
+[Fonts]
+fixed="Noto Sans Mono,10,-1,5,50,0,0,0,0,0"
+general="Noto Sans,10,-1,5,50,0,0,0,0,0"
+QT5
+cat > /etc/xdg/qt6ct/qt6ct.conf <<'QT6'
+[Appearance]
+style=kvantum
+color_scheme_path=
+custom_palette=false
+icon_theme=Papirus-Dark
+standard_dialogs=default
+
+[Fonts]
+fixed="Noto Sans Mono,10,-1,5,50,0,0,0,0,0"
+general="Noto Sans,10,-1,5,50,0,0,0,0,0"
+QT6
+
+# --- Kvantum: pick the DeepBlue theme ---
+mkdir -p /etc/xdg/Kvantum
+cat > /etc/xdg/Kvantum/kvantum.kvconfig <<'KV'
+[General]
+theme=DeepBlue
+KV
+
+# --- GTK 2/3/4: Arc-Dark + Papirus-Dark + DeepBlue wallpaper ---
+for v in gtk-2.0 gtk-3.0 gtk-4.0; do mkdir -p "/etc/xdg/${v}"; done
+cat > /etc/xdg/gtk-2.0/gtkrc <<'GTK2'
+gtk-theme-name = "Arc-Dark"
+gtk-icon-theme-name = "Papirus-Dark"
+gtk-font-name = "Noto Sans 10"
+GTK2
+cat > /etc/xdg/gtk-3.0/settings.ini <<'GTK3'
+[Settings]
+gtk-theme-name=Arc-Dark
+gtk-icon-theme-name=Papirus-Dark
+gtk-font-name=Noto Sans 10
+gtk-application-prefer-dark-theme=true
+GTK3
+cat > /etc/xdg/gtk-4.0/settings.ini <<'GTK4'
+[Settings]
+gtk-theme-name=Arc-Dark
+gtk-icon-theme-name=Papirus-Dark
+gtk-font-name=Noto Sans 10
+gtk-application-prefer-dark-theme=true
+GTK4
+
+# --- GTK greeter reads dconf too (belt and braces) ---
+mkdir -p /etc/dconf/db/local.d
+cat > /etc/dconf/db/local.d/00-deepblue <<'DCONF'
+[org/gnome/desktop/interface]
+gtk-theme='Arc-Dark'
+icon-theme='Papirus-Dark'
+font-name='Noto Sans 10'
+DCONF
+dconf update 2>/dev/null || true
+
+# --- LXQt: dark DeepBlue theme, icons, fonts, single panel at the bottom ---
+mkdir -p /etc/xdg/lxqt
+cat > /etc/xdg/lxqt/lxqt.conf <<'LXQT'
+[General]
+theme=DeepBlue
+icon_theme=Papirus-Dark
+single_click_activate=false
+tool_button_style=ToolButtonTextBesideIcon
+
+[Qt]
+font="Noto Sans,10,-1,5,50,0,0,0,0,0"
+doubleClickInterval=400
+style=kvantum
+wheelScrollLines=3
+LXQT
+
+# Panel: a Deepin-style bottom bar.
+cat > /etc/xdg/lxqt/panel.conf <<'PANEL'
+panels=panel1
+
+[panel1]
+plugins=mainmenu,desktopswitch,taskbar,statusnotifier,tray,volume,worldclock,showdesktop
+position=Top
+desktop=0
+iconSize=24
+fontSize=10
+lineSize=32
+panelSize=40
+
+[mainmenu]
+type=mainmenu
+alignment=Left
+icon=deepblue-logo
+
+[desktopswitch]
+type=desktopswitch
+alignment=Left
+
+[taskbar]
+type=taskbar
+buttonWidth=220
+closeOnMiddleClick=true
+groupingEnabled=true
+showOnlyOneDesktopTasks=false
+
+[statusnotifier]
+alignment=Right
+type=statusnotifier
+
+[tray]
+alignment=Right
+type=tray
+
+[volume]
+device=0
+type=volume
+alignment=Right
+
+[worldclock]
+type=worldclock
+alignment=Right
+
+[showdesktop]
+alignment=Right
+type=showdesktop
+PANEL
+
+# --- LightDM: slick-greeter with DeepBlue theme ---
 mkdir -p /etc/lightdm/lightdm.conf.d
 cat > /etc/lightdm/lightdm.conf.d/60-deepblue.conf <<'LDM'
 [Seat:*]
-greeter-session=lightdm-gtk-greeter
+greeter-session=slick-greeter
 user-session=lxqt
 autologin-user=deepblue
 autologin-user-timeout=0
 LDM
+cat > /etc/lightdm/slick-greeter.conf <<'SLICK'
+[Greeter]
+background=/usr/share/backgrounds/deepblue/wallpaper.png
+theme-name=Arc-Dark
+icon-theme-name=Papirus-Dark
+font-name=Noto Sans 10
+draw-user-backgrounds=false
+show-hostname=false
+show-power=false
+SLICK
 
-# --- LXQt: set wallpaper for the live user ---
-mkdir -p /home/${USERNAME}/.config/pcmanfm-qt/lxqt
-cat > /home/${USERNAME}/.config/pcmanfm-qt/lxqt/settings.conf <<'PCM'
+# --- X cursor theme for the session ---
+mkdir -p /etc/X11/Xresources
+cat > /etc/X11/Xresources/deepblue <<'XRES'
+Xcursor.theme: Bibata-Modern-Ice
+Xcursor.size: 24
+XRES
+
+# Ship only the cursor variant we use; the other five cost ~144 MB.
+for c in Bibata-Modern-Amber Bibata-Modern-Classic Bibata-Original-Amber \
+         Bibata-Original-Classic Bibata-Original-Ice; do
+  rm -rf "/usr/share/icons/${c}"
+done
+
+# The live session runs en_US.UTF-8; drop the other message catalogs.
+find /usr/share/locale -mindepth 1 -maxdepth 1 -type d ! -name 'en*' \
+     -exec rm -rf {} + 2>/dev/null || true
+
+# Firmware for enterprise NICs no desktop will ever have.
+rm -rf /usr/lib/firmware/netronome
+
+# --- Plymouth: DeepBlue boot splash ---
+mkdir -p /etc/plymouth
+cat > /etc/plymouth/plymouthd.conf <<'PLY'
+[Daemon]
+Theme=deepblue
+ShowDelay=0
+DeviceTimeout=8
+PLY
+if [ -d /usr/share/plymouth/themes/deepblue ]; then
+  if command -v plymouth-set-default-theme >/dev/null 2>&1; then
+    plymouth-set-default-theme deepblue 2>/dev/null || true
+  fi
+fi
+
+# --- Plank dock (Deepin-style launcher bar) ---
+cat > /etc/xdg/autostart/plank.desktop <<'PLK'
+[Desktop Entry]
+Type=Application
+Name=Plank
+Comment=DeepBlue application dock
+Exec=plank
+Terminal=false
+PLK
+mkdir -p /etc/xdg/plank/dock1/launchers
+cat > /etc/xdg/plank/dock1/settings <<'PSET'
+[PlankDockPreferences]
+Theme=Default
+IconSize=48
+ItemsAlignment=3
+Position=3
+HideMode=0
+LockItems=false
+PSET
+i=0
+for app in pcmanfm-qt firefox-esr qterminal org.lxqt.mousepad; do
+  i=$((i+1))
+  cat > "/etc/xdg/plank/dock1/launchers/dockitem${i}.dockitem" <<DIT
+[PlankDockItemPreferences]
+Launcher=file:///usr/share/applications/${app}.desktop
+DIT
+done
+
+# --- Compositor for the translucent dock / blur look ---
+cat > /etc/xdg/picom.conf <<'PICOM'
+backend = "xrender";
+shadow = false;
+blur-background = false;
+fading = true;
+fade-in-step = 0.05;
+fade-out-step = 0.05;
+inactive-opacity = 0.97;
+PICOM
+cat > /etc/xdg/autostart/picom.desktop <<'PICA'
+[Desktop Entry]
+Type=Application
+Name=Picom
+Comment=DeepBlue window compositor
+Exec=picom --config /etc/xdg/picom.conf
+Terminal=false
+PICA
+
+# =====================================================================
+#  Per-user defaults (live user + /etc/skel for new accounts)
+# =====================================================================
+seed_user() {
+  u="$1"
+  mkdir -p "${u}/.config/lxqt" "${u}/.config/pcmanfm-qt/lxqt" \
+           "${u}/.config/gtk-3.0" "${u}/.config/qt5ct" "${u}/.config/qt6ct" \
+           "${u}/.config/plank"
+  cp /etc/xdg/lxqt/lxqt.conf   "${u}/.config/lxqt/lxqt.conf"
+  cp /etc/xdg/lxqt/panel.conf  "${u}/.config/lxqt/panel.conf"
+  cp /etc/xdg/gtk-3.0/settings.ini "${u}/.config/gtk-3.0/settings.ini"
+  cp /etc/xdg/qt5ct/qt5ct.conf "${u}/.config/qt5ct/qt5ct.conf"
+  cp /etc/xdg/qt6ct/qt6ct.conf "${u}/.config/qt6ct/qt6ct.conf"
+  cp -r /etc/xdg/plank/dock1 "${u}/.config/plank/dock1"
+  cat > "${u}/.config/pcmanfm-qt/lxqt/settings.conf" <<PCM
 [Desktop]
-Wallpaper=/usr/share/backgrounds/deepblue/wallpaper.png
+Wallpaper=${WALLPAPER}
 WallpaperMode=stretch
 PCM
-chown -R 1000:1000 /home/${USERNAME}/.config 2>/dev/null || true
+}
 
-# --- skel so new users inherit branding ---
-mkdir -p /etc/skel/.config/pcmanfm-qt/lxqt
-cp /home/${USERNAME}/.config/pcmanfm-qt/lxqt/settings.conf /etc/skel/.config/pcmanfm-qt/lxqt/settings.conf 2>/dev/null || true
+seed_user "${HOME_DIR}"
+mkdir -p /etc/skel
+seed_user "/etc/skel"
+
+chown -R 1000:1000 "${HOME_DIR}" 2>/dev/null || true
 
 exit 0

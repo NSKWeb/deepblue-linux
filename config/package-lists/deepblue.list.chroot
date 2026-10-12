@@ -59,8 +59,21 @@ fonts-dejavu
 fonts-noto
 fonts-noto-cjk
 fonts-noto-color-emoji
+fonts-inter
 papirus-icon-theme
 arc-theme
+
+# --- Deepin-style desktop theming ---
+qt-style-kvantum
+qt-style-kvantum-themes
+qt6ct
+plank
+picom
+lxqt-themes
+bibata-cursor-theme
+plymouth
+plymouth-themes
+plymouth-label
 
 # --- Apps ---
 firefox-esr

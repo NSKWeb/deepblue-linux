@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=DeepBlue
+Description=DeepBlue Linux boot splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/deepblue
+ScriptFile=/usr/share/plymouth/themes/deepblue/deepblue.script
