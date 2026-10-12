@@ -16,6 +16,9 @@ to a smaller, reproducible scale.
   Deepin's DDE feel)
 - **Display manager:** LightDM
 - **Boot:** hybrid ISO — boots on both BIOS and UEFI machines
+- **Installer:** ships the Debian installer (graphical + textual). The boot
+  menu offers "Start installer" alongside the live system, so the distro can be
+  installed to disk, not just run live.
 - **Live user:** `deepblue` (password `live`, member of `sudo`)
 - **Auto-login:** the live session boots straight into the LXQt desktop,
   no login prompt (Deepin-live style)
@@ -27,10 +30,11 @@ to a smaller, reproducible scale.
 | Property        | Value                                  |
 | --------------- | -------------------------------------- |
 | Volume label    | `DEEPBLUE`                             |
-| Size            | ~1.4 GB                                |
+| Size            | ~2.1 GB (live + installer)             |
 | Boot records    | El Torito BIOS (`isolinux`) + UEFI (`grub`) |
 | Live user       | `deepblue` / `live`                    |
 | Hostname        | `deepblue`                             |
+| Installer       | Debian installer, graphical + textual  |
 
 The built ISO is intentionally **not** committed to this repository (it is
 large and fully reproducible from the source here). Build it yourself with
@@ -41,6 +45,7 @@ large and fully reproducible from the source here). Build it yourself with
 ```
 config/
   package-lists/deepblue.list.chroot      # packages installed into the live system
+  package-lists/installer.list.chroot     # debian-installer-launcher
   hooks/live/0100-deepblue-branding.hook.chroot
                                           # runs in the chroot: user session,
                                           # wallpaper, welcome message, DM
@@ -49,8 +54,9 @@ config/
   includes.chroot/usr/share/deepblue/logo/deepblue-logo.png
   includes.chroot/usr/share/pixmaps/deepblue-logo.png
   includes.binary/isolinux/splash.png     # BIOS boot splash
+setup-host.sh                             # install toolchain + container workaround
 build.sh                                  # configure + build
-docs/                                     # boot/login test evidence
+docs/                                     # boot/login/gui/installer test evidence
 ```
 
 ## Building
@@ -59,10 +65,8 @@ Requires a Debian (or Debian-derived) host, root privileges, ~60 GB free disk
 and an internet connection.
 
 ```sh
-sudo apt-get install live-build xorriso squashfs-tools debootstrap \
-     isolinux syslinux-common syslinux-efi grub-pc-bin grub-efi-amd64-bin \
-     grub-common mtools dosfstools imagemagick
-sudo ./build.sh
+sudo ./setup-host.sh     # installs the toolchain + applies container workaround
+sudo ./build.sh          # configures and builds the ISO
 ```
 
 The result is `live-image-amd64.hybrid.iso`.
@@ -110,6 +114,10 @@ Desktop: LXQt
   up: `lightdm` active, `Xorg :0` running, and a full LXQt desktop
   (`lxqt-session`, `lxqt-panel`, `openbox`, `pcmanfm-qt`, …) running as
   `deepblue` via auto-login.
+- `docs/installer-test.log` — the Debian installer boots from the same medium
+  and runs its dialog flow (language → location → keyboard → detecting
+  hardware to find installation media → network detection), confirming the
+  ISO can install to disk and not just run live.
 
 ## Build timing
 
@@ -119,8 +127,20 @@ On a 4-vCPU sandbox with no KVM (QEMU TCG):
 | ------------------------------- | -------- |
 | First build, empty apt cache    | ~12.5 min |
 | Rebuild, warm apt cache         | ~8.5 min  |
+| Installer-enabled, warm cache   | ~12 min   |
 
 The long pole is `mksquashfs -comp xz` compressing the ~1.3 GB root filesystem.
+Adding the installer pulls ~700 MB of udebs and grows the ISO to ~2.1 GB.
+
+### live-build rebuild gotchas
+
+`lb build` reuses cached stage files in `.build/` and will silently skip stages
+whose inputs look unchanged — hook edits are a common victim. To force a stage
+to re-run, remove its marker (for example `sudo rm -rf .build/chroot_hooks`)
+or run `lb clean` and rebuild; keep `cache/` so package downloads are not
+repeated. Do not delete `.build/config`, or `lb build` aborts with
+`the following stage is required to be done first: config` — re-run
+`lb config` (as `build.sh` does) to recreate it.
 
 ## Extending
 
@@ -129,8 +149,9 @@ The long pole is `mksquashfs -comp xz` compressing the ~1.3 GB root filesystem.
 - **Real Deepin desktop:** install the `dde` packages from the Deepin
   repositories (`linuxdeepin` / `deepin-community` on GitHub) and point the
   session at DDE instead of LXQt.
-- **Installer:** add `--debian-installer live` and an installer package list to
-  let users install to disk, or wire up Calamares.
+- **Unattended installs:** add a preseed file
+  (`--debian-installer-preseedfile`) and a matching kernel append line to make
+  the "Automated install" boot entry hands-off.
 - **Own repository:** host custom `.deb` packages with `reprepro`/`aptly` and
   add them via `config/archives/`.
 

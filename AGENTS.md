@@ -7,9 +7,14 @@ regenerates the ISO.
 
 ## Build
 - Host: Debian (or derived), root required, ~60 GB free disk, internet.
-- `sudo ./build.sh` → produces `live-image-amd64.hybrid.iso` (~1.4 GB).
+- `sudo ./setup-host.sh` installs the toolchain and applies the container
+  workaround; `sudo ./build.sh` configures and builds.
+- `sudo ./build.sh` → produces `live-image-amd64.hybrid.iso` (~2.1 GB).
 - Base: Debian `trixie`, amd64, hybrid BIOS+UEFI.
 - Desktop: LXQt + LightDM. Live user `deepblue` / password `live`.
+- Installer: Debian installer enabled (`--debian-installer live`). Adds
+  `/install/` (vmlinuz, initrd.gz, gtk/) and `/dists/` udebs to the ISO, plus
+  "Start installer" boot entries for BIOS and UEFI.
 
 ## Container gotcha (important)
 `live-build` mounts a fresh `sysfs` into the chroot. Containers without

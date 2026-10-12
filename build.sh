@@ -17,7 +17,7 @@ lb config \
   --distribution trixie \
   --architectures amd64 \
   --binary-images iso-hybrid \
-  --debian-installer none \
+  --debian-installer live \
   --archive-areas "main contrib non-free non-free-firmware" \
   --iso-application "DeepBlue Linux" \
   --iso-preparer "DeepBlue Project" \
