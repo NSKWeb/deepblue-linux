@@ -48,12 +48,28 @@ The live user password is `live` (live-config default). Evidence logs live in
 - ISO and live-build work dirs are gitignored; never commit the ISO.
 - Keep branding placeholders (`example.org`) until real URLs exist.
 - Any content posted to external services must note it was AI-generated.
+- README must be **valid UTF-8 with real Unicode** (—, →, “ ”, emoji). It once
+  accumulated double-encoded mojibake (`â€”`, `đź§©`) from earlier edits; if you
+  see C1/C2 sequences, normalize each line with `line.encode(codec).decode('utf-8')`
+  trying cp1252, then cp1250, then latin-1 (cp1250 is needed for `ś/ť/ź/Ą`).
+  Check with: `python3 -c "import io;s=io.open('README.md',encoding='utf-8').read();print('\u00e2\u20ac' in s)"`.
+
+## Docs assets (SVG infographics)
+- Diagrams live in `docs/assets/*.svg`; style convention: dark-blue gradient
+  header (`#0a4a86`→`#0891b2`), light body, accent `#38bdf8`/`#1c6fd6`, CSS
+  classes, `role="img"` + `aria-label`, `viewBox` width 1200–1240.
+- XML comments may **not** contain `--` (e.g. `<!-- ---- foo ---- -->` is
+  invalid). Validate every SVG: `python3 -c "import xml.dom.minidom as m;m.parse('docs/assets/x.svg')"`.
+- Preview headlessly with `chromium --headless --no-sandbox --disable-gpu
+  --screenshot=out.png file://$PWD/docs/assets/x.svg` before committing.
 
 ## Auto-login
 `config/hooks/live/0100-deepblue-branding.hook.chroot` sets
 `autologin-user=deepblue` in `/etc/lightdm/lightdm.conf.d/60-deepblue.conf`.
 Debian's `lightdm-autologin` PAM stack uses `pam_permit.so`, so no
 `nopasswdlogin` group is needed. Verified: boots straight into LXQt.
+This is **live-session only**: an installed system has no auto-login, and the
+greeter asks for the user's password every boot (README “How a session boots”).
 
 ## live-build rebuild gotchas
 - `lb build` silently reuses cached stage files in `.build/` and will NOT pick
