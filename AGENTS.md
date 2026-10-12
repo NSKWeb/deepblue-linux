@@ -103,3 +103,45 @@ parent setgid bit, giving `DEBIAN/` mode `2755` and `dpkg-deb` fails with
 `control directory has bad permissions 2755`. `tools/build-repo.sh` runs
 `chmod g-s` on every `DEBIAN/` before building.
 
+
+### live-build stage markers (rebuild gotcha)
+`lb build` skips any stage whose marker exists in `.build/`. When you change a
+hook, package list, or anything that affects the *binary* or *installer*
+stages, the marker must be cleared or the change silently never lands in the
+ISO. This bit us twice: a rebuild kept the **old ISO** (missing the debian
+installer payload) because `.build/installer_debian-installer` and
+`.build/installer_preseed` were stale.
+
+To force a full binary+installer rebuild:
+
+    sudo rm -rf binary binary.modified_timestamps chroot/binary chroot/binary.sh
+    sudo rm -f .build/binary_* .build/installer_*
+    lb build
+
+Then verify the payload actually made it in:
+
+    xorriso -indev live-image-amd64.hybrid.iso -find /install/gtk/vmlinuz   # want 1
+    xorriso -indev live-image-amd64.hybrid.iso -find /dists                # want ~30
+    xorriso -indev live-image-amd64.hybrid.iso -find /pool-udeb            # want ~490
+
+### Release size limit (GitHub 2 GB)
+GitHub release assets must be **< 2 GiB per file**. A full Debian live ISO with
+firmware + the debian installer lands around 2.05 GiB, over the limit. The
+branding hook trims to fit: drop unused Bibata cursor variants, non-`en` locale
+catalogs, and the `netronome` NIC firmware. Keep the ISO under 2 GiB when
+adding packages.
+
+### Verifying the desktop headlessly
+Boot the ISO under QEMU with a VGA adapter and a monitor socket, then take a
+screenshot without any GUI on the host:
+
+    qemu-system-x86_64 -m 2048 -smp 2 -vga std -display none \
+      -monitor unix:/tmp/qmon,server,nowait \
+      -cdrom live-image-amd64.hybrid.iso -kernel /tmp/boot/vmlinuz \
+      -initrd /tmp/boot/initrd.img \
+      -append "boot=live components hostname=deepblue username=deepblue console=ttyS0,115200"
+
+Then, from Python, connect to `/tmp/qmon` and send `screendump /tmp/desktop.ppm`.
+Serial console (login `deepblue` / `live`) is enough to check config files and
+that `plank`/`picom` are running; the screendump confirms the actual look.
+

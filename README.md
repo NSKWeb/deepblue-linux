@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/assets/hero.svg" alt="DeepBlue Linux — Debian-based, LXQt desktop, your own signed archive" width="100%"/>
+<img src="docs/assets/hero.svg" alt="DeepBlue Linux â€” Debian-based, LXQt desktop, your own signed archive" width="100%"/>
 
-**A Deepin-inspired, Debian-based Linux distribution you actually own — its own identity packages, its own signed APT archive, its own release.**
+**A Deepin-inspired, Debian-based Linux distribution you actually own â€” its own identity packages, its own signed APT archive, its own release.**
 
 [![Release](https://img.shields.io/badge/release-1.0%20%22Cobalt%22-0891b2?style=for-the-badge)](#-release)
 [![Download ISO](https://img.shields.io/badge/download-ISO%20%C2%B7%202%20GB-16a34a?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/NSKWeb/deepblue-linux/releases/latest)
@@ -15,13 +15,13 @@
 
 ---
 
-## 📥 Download &amp; run
+## đź“Ą Download &amp; run
 
 ### 1. Get the ISO
 
 Download the latest image from the **[Releases page](https://github.com/NSKWeb/deepblue-linux/releases/latest)**:
 
-**`DeepBlue-Linux-1.0-amd64.iso`** — ~2.0 GB (live + installer)
+**`DeepBlue-Linux-1.0-amd64.iso`** â€” ~2.0 GB (live + installer)
 
 Or from the command line:
 
@@ -41,7 +41,7 @@ The expected hash is `4517ddfa9be0220f415483d0eda9c1db609f89ae4e7c567345c273d1d2
 
 ### 3. Flash it to a USB stick
 
-Use a stick of **4 GB or larger** — everything on it will be erased.
+Use a stick of **4 GB or larger** â€” everything on it will be erased.
 
 <table>
 <tr><th align="left">OS</th><th align="left">Command</th></tr>
@@ -51,23 +51,23 @@ Use a stick of **4 GB or larger** — everything on it will be erased.
 sudo dd if=DeepBlue-Linux-1.0-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync
 ```
 
-(Replace `/dev/sdX` with your USB device — check with `lsblk`. On macOS use `/dev/rdiskN`.)
+(Replace `/dev/sdX` with your USB device â€” check with `lsblk`. On macOS use `/dev/rdiskN`.)
 
 </td></tr>
-<tr><td><b>Windows</b></td><td>Use <a href="https://rufus.ie">Rufus</a> or <a href="https://etcher.balena.io">balenaEtcher</a>: select the ISO, select the USB stick, press Start. Choose “DD image” mode in Rufus if prompted.</td></tr>
+<tr><td><b>Windows</b></td><td>Use <a href="https://rufus.ie">Rufus</a> or <a href="https://etcher.balena.io">balenaEtcher</a>: select the ISO, select the USB stick, press Start. Choose â€śDD imageâ€ť mode in Rufus if prompted.</td></tr>
 </table>
 
 ### 4. Boot from the USB stick
 
 1. Plug the stick into the machine and **reboot**.
-2. Open the **boot menu** — usually `F12`, `F10`, `F9`, `Esc`, or `Del` during the splash.
+2. Open the **boot menu** â€” usually `F12`, `F10`, `F9`, `Esc`, or `Del` during the splash.
 3. Pick the USB entry. On a **UEFI** machine you may need to disable Secure Boot once (the image is not Secure-Boot signed).
 
 The boot menu offers three ways in:
 
 | Entry | What it does |
 | --- | --- |
-| **Live system** | Boots the full desktop without touching your disk — auto-logs into LXQt. |
+| **Live system** | Boots the full desktop without touching your disk â€” auto-logs into LXQt. |
 | **Start installer** | Launches the Debian installer (graphical or textual) to install DeepBlue to disk. |
 | **Live system (failsafe)** | Live boot with conservative kernel options, if the normal one has trouble. |
 
@@ -76,7 +76,7 @@ The boot menu offers three ways in:
 
 ### 5. Try it in a virtual machine (no USB needed)
 
-Any of these work — give it **2 GB RAM** and **20 GB disk**:
+Any of these work â€” give it **2 GB RAM** and **20 GB disk**:
 
 <table>
 <tr><th align="left">Tool</th><th align="left">How</th></tr>
@@ -90,21 +90,21 @@ qemu-system-x86_64 -m 2048 -smp 2 -enable-kvm \
 (drop `-enable-kvm` on macOS/Windows; it will run under TCG)
 
 </td></tr>
-<tr><td><b>VirtualBox</b></td><td>New VM → Linux / Debian 64-bit → attach the ISO as the optical disk → Start.</td></tr>
-<tr><td><b>VMware / Hyper-V</b></td><td>New VM → attach the ISO → boot. UEFI or BIOS both work.</td></tr>
+<tr><td><b>VirtualBox</b></td><td>New VM â†’ Linux / Debian 64-bit â†’ attach the ISO as the optical disk â†’ Start.</td></tr>
+<tr><td><b>VMware / Hyper-V</b></td><td>New VM â†’ attach the ISO â†’ boot. UEFI or BIOS both work.</td></tr>
 </table>
 
 ### 6. Install to disk
 
-From the live session, double-click **Install DeepBlue** on the desktop (or pick **Start installer** at the boot menu), then follow the Debian installer: language → location → keyboard → disk → user → install. On first boot you get the installed DeepBlue system, which updates from its own signed archive.
+From the live session, double-click **Install DeepBlue** on the desktop (or pick **Start installer** at the boot menu), then follow the Debian installer: language â†’ location â†’ keyboard â†’ disk â†’ user â†’ install. On first boot you get the installed DeepBlue system, which updates from its own signed archive.
 
 ---
 
 ## Why this exists
 
-Most “make your own distro” advice stops at a wallpaper and an `os-release`
-file. DeepBlue goes the full distance and does what real derivatives — Ubuntu,
-Linux Mint, Kali, and Deepin itself — do:
+Most â€śmake your own distroâ€ť advice stops at a wallpaper and an `os-release`
+file. DeepBlue goes the full distance and does what real derivatives â€” Ubuntu,
+Linux Mint, Kali, and Deepin itself â€” do:
 
 - ships its **identity as a real Debian package** that **diverts** the copies
   from `base-files`, so a Debian upgrade can never silently overwrite the
@@ -125,9 +125,13 @@ same approach taken to a smaller, reproducible scale.
 <table>
 <tr><th align="left">Layer</th><th align="left">Choice</th><th align="left">Why</th></tr>
 <tr><td><b>Base</b></td><td>Debian GNU/Linux 13 (trixie), <code>amd64</code></td><td>Stable, huge package set, the same base Deepin uses</td></tr>
-<tr><td><b>Desktop</b></td><td>LXQt (Qt-based)</td><td>Closest stock-Debian equivalent to Deepin’s DDE look &amp; feel</td></tr>
+<tr><td><b>Desktop</b></td><td>LXQt (Qt6) + Kvantum <code>DeepBlue</code> theme</td><td>Closest stock-Debian equivalent to Deepin’s DDE look &amp; feel</td></tr>
+<tr><td><b>Icons / cursor</b></td><td>Papirus-Dark · Bibata-Modern-Ice</td><td>Modern, consistent, Deepin-adjacent</td></tr>
+<tr><td><b>GTK theme</b></td><td>Arc-Dark</td><td>Dark GTK apps match the Qt theme</td></tr>
+<tr><td><b>Shell</b></td><td>Top LXQt panel + bottom Plank dock</td><td>Deepin’s top-bar / bottom-dock layout</td></tr>
+<tr><td><b>Boot splash</b></td><td>DeepBlue Plymouth theme</td><td>Branded boot, no stock logo</td></tr>
 <tr><td><b>Display manager</b></td><td>LightDM with slick-greeter</td><td>Themeable, auto-login friendly</td></tr>
-<tr><td><b>Boot</b></td><td>Hybrid ISO — BIOS + UEFI</td><td>One image boots on anything</td></tr>
+<tr><td><b>Boot</b></td><td>Hybrid ISO â€” BIOS + UEFI</td><td>One image boots on anything</td></tr>
 <tr><td><b>Installer</b></td><td>Debian installer, graphical + textual</td><td>Install to disk, not just live</td></tr>
 <tr><td><b>Live user</b></td><td><code>deepblue</code> (password <code>live</code>, in <code>sudo</code>)</td><td>Deepin-live style, no friction</td></tr>
 <tr><td><b>Auto-login</b></td><td>Straight into the LXQt desktop</td><td>No login prompt on the live session</td></tr>
@@ -135,9 +139,34 @@ same approach taken to a smaller, reproducible scale.
 
 ---
 
+## 🎨 Deepin-style theming
+
+DeepBlue ships a coherent, dark, blue-accented desktop — not stock LXQt.
+
+![DeepBlue live desktop: top panel, DeepBlue wallpaper, bottom Plank dock](docs/deepblue-desktop.png)
+
+| Piece | What it is |
+|---|---|
+| **Qt widget style** | Kvantum `DeepBlue` theme (recolored KvArcDark: highlight `#1c6fd6`, base `#0f2340`), selected via `qt6ct`/`qt5ct` |
+| **LXQt theme** | `DeepBlue` (panel background `rgba(7,22,43,72%)`, blue accents) |
+| **Icons** | Papirus-Dark |
+| **Cursor** | Bibata-Modern-Ice (only the used variant ships; the rest are trimmed to stay under the 2 GB release limit) |
+| **GTK apps** | Arc-Dark, `gtk-application-prefer-dark-theme=true` |
+| **Panel** | LXQt panel on top — main menu, desktop switcher, taskbar, tray, volume, clock |
+| **Dock** | Plank on the bottom, translucent, seeded with Files · Firefox · QTerminal · Mousepad |
+| **Compositor** | picom (fading + inactive-opacity) for the translucent dock |
+| **Login** | slick-greeter with the DeepBlue wallpaper, Arc-Dark, auto-login |
+| **Boot splash** | DeepBlue Plymouth theme (deep-blue gradient, pulsing logo, progress bar) |
+
+All of it lives in one hook — `config/hooks/live/0100-deepblue-branding.hook.chroot` —
+plus the theme directories under `config/includes.chroot/usr/share/{Kvantum,lxqt,plymouth}`.
+Per-user defaults are seeded into both `/home/deepblue` and `/etc/skel`.
+
+---
+
 ## Architecture
 
-<img src="docs/assets/architecture.svg" alt="DeepBlue build pipeline: sources → build → ISO → installed system and the update loop back into the signed archive" width="100%"/>
+<img src="docs/assets/architecture.svg" alt="DeepBlue build pipeline: sources â†’ build â†’ ISO â†’ installed system and the update loop back into the signed archive" width="100%"/>
 
 The pipeline is short and reproducible. `build.sh` runs four things:
 
@@ -152,34 +181,34 @@ The pipeline is short and reproducible. `build.sh` runs four things:
 4. `lb build` bootstraps the chroot, installs packages, squashfs-es the live
    system and produces a **hybrid ISO** with both BIOS and UEFI boot records.
 
-On an installed system the loop closes: `apt update` validates the archive’s
+On an installed system the loop closes: `apt update` validates the archiveâ€™s
 `InRelease` against the shipped keyring, and `deepblue-base` updates come
 straight from `DeepBlue Linux:cobalt`.
 
 ---
 
-## Ownership — the honest picture
+## Ownership â€” the honest picture
 
 <img src="docs/assets/ownership.svg" alt="Three ownership layers: yours, used under licence, and third-party names" width="100%"/>
 
-“Ownership” has two meanings, and it is worth being precise:
+â€śOwnershipâ€ť has two meanings, and it is worth being precise:
 
 | | Meaning | Reality for DeepBlue |
 |---|---|---|
-| ✅ **Practical** | Who controls the distribution: identity, packages, repository, release | **Yours.** You decide what ships, when, its name, and who may publish. |
-| 🧩 **Licence** | The underlying Debian/LXQt/kernel code | Owned by its authors under GPL/LGPL/MIT/BSD. You may use, modify, redistribute — **not** claim authorship. |
-| 🚫 **Trademark** | “Deepin”, “DDE”, Deepin logos | Belong to Deepin Technology / the Deepin community. DeepBlue is *inspired by* Deepin and ships none of its marks. |
+| âś… **Practical** | Who controls the distribution: identity, packages, repository, release | **Yours.** You decide what ships, when, its name, and who may publish. |
+| đź§© **Licence** | The underlying Debian/LXQt/kernel code | Owned by its authors under GPL/LGPL/MIT/BSD. You may use, modify, redistribute â€” **not** claim authorship. |
+| đźš« **Trademark** | â€śDeepinâ€ť, â€śDDEâ€ť, Deepin logos | Belong to Deepin Technology / the Deepin community. DeepBlue is *inspired by* Deepin and ships none of its marks. |
 
 Practical ownership is exactly what Ubuntu, Mint, Kali and Deepin exercise.
 Full legal ownership of the Free Software stack is not something any
-distribution has — and claiming it would be inaccurate and a licence
+distribution has â€” and claiming it would be inaccurate and a licence
 violation. See [`docs/OWNERSHIP.md`](docs/OWNERSHIP.md).
 
 ---
 
-## Packages — the identity is code, not files
+## Packages â€” the identity is code, not files
 
-DeepBlue’s branding lives in **real Debian packages**, built from source in
+DeepBlueâ€™s branding lives in **real Debian packages**, built from source in
 [`pkg/`](pkg/):
 
 | Package | Purpose |
@@ -196,10 +225,10 @@ DeepBlue’s branding lives in **real Debian packages**, built from source in
 `trying to overwrite '/etc/os-release'`. Two things fix it, both in
 [`pkg/deepblue-base/DEBIAN/preinst`](pkg/deepblue-base/DEBIAN/preinst):
 
-1. **`--no-rename`** — we do not want the file moved aside, we replace its
+1. **`--no-rename`** â€” we do not want the file moved aside, we replace its
    contents.
 2. debootstrap leaves a *local* diversion on `/etc/os-release`
-   (`→ /etc/os-release.debootstrap`) that clashes with ours; the `preinst`
+   (`â†’ /etc/os-release.debootstrap`) that clashes with ours; the `preinst`
    drops it first and **must pass `--local`**, otherwise dpkg scopes the
    removal to the package and errors `mismatch on package`.
 
@@ -208,8 +237,8 @@ The `prerm` mirrors the `preinst` exactly. The result is verified behaviour:
 | Action | `/etc/os-release` after |
 | --- | --- |
 | Install `deepblue-base` | `PRETTY_NAME="DeepBlue Linux 1.0"` |
-| Reinstall `base-files` | **still DeepBlue** — the upgrade cannot clobber it |
-| Purge `deepblue-base` | Debian’s original, diversions cleanly removed |
+| Reinstall `base-files` | **still DeepBlue** â€” the upgrade cannot clobber it |
+| Purge `deepblue-base` | Debianâ€™s original, diversions cleanly removed |
 
 ---
 
@@ -230,7 +259,7 @@ Signed-By: /usr/share/keyrings/deepblue-archive-keyring.gpg
 ```
 
 > [!IMPORTANT]
-> The **private signing key** lives in `repo/gnupg/` and is **gitignored —
+> The **private signing key** lives in `repo/gnupg/` and is **gitignored â€”
 > never commit or share it.** It is the one thing that lets you publish
 > packages your systems will trust. To host the archive over HTTP later, copy
 > `repo/apt/` to a web root and point the `URIs:` field at your URL.
@@ -243,13 +272,13 @@ Signed-By: /usr/share/keyrings/deepblue-archive-keyring.gpg
 
 Everything below was exercised on the built image (evidence in [`docs/`](docs/)):
 
-- [x] Live ISO **boots** under QEMU (TCG) — banner `DeepBlue Linux 1.0 (Cobalt)`, `deepblue login:`
+- [x] Live ISO **boots** under QEMU (TCG) â€” banner `DeepBlue Linux 1.0 (Cobalt)`, `deepblue login:`
 - [x] **Auto-login** into the LXQt graphical session
-- [x] Debian **installer** boots (textual + graphical) — language → location → keyboard → hardware → network
+- [x] Debian **installer** boots (textual + graphical) â€” language â†’ location â†’ keyboard â†’ hardware â†’ network
 - [x] `deepblue-base` **installs cleanly** in the chroot
-- [x] `apt-get update` validates the archive’s `InRelease` with the shipped keyring — no prompts, no errors
-- [x] `apt-cache policy deepblue-base` → candidate from **`DeepBlue Linux:cobalt`**
-- [x] `base-files` reinstall leaves the DeepBlue identity intact; purge restores Debian’s
+- [x] `apt-get update` validates the archiveâ€™s `InRelease` with the shipped keyring â€” no prompts, no errors
+- [x] `apt-cache policy deepblue-base` â†’ candidate from **`DeepBlue Linux:cobalt`**
+- [x] `base-files` reinstall leaves the DeepBlue identity intact; purge restores Debianâ€™s
 
 ---
 
@@ -257,7 +286,7 @@ Everything below was exercised on the built image (evidence in [`docs/`](docs/))
 
 | Property | Value |
 | --- | --- |
-| Version | **1.0 “Cobalt”** |
+| Version | **1.0 â€śCobaltâ€ť** |
 | File | `DeepBlue-Linux-1.0-amd64.iso` |
 | Size | ~2.0 GB (live + installer) |
 | Volume label | `DEEPBLUE` |
@@ -268,8 +297,8 @@ Everything below was exercised on the built image (evidence in [`docs/`](docs/))
 The built ISO is intentionally **not** committed to git (it is large); it is
 published as a **release asset** and is fully reproducible from this source.
 
-**[Download the latest ISO](https://github.com/NSKWeb/deepblue-linux/releases/latest)** �
-[all releases](https://github.com/NSKWeb/deepblue-linux/releases) �
+**[Download the latest ISO](https://github.com/NSKWeb/deepblue-linux/releases/latest)** ·
+[all releases](https://github.com/NSKWeb/deepblue-linux/releases) ·
 [how to flash &amp; boot](#-download--run)
 
 ---
@@ -326,7 +355,7 @@ with the installer ~12 min.
 
 ## Verification
 
-Boot the ISO under QEMU (no KVM in this sandbox, so TCG — slow):
+Boot the ISO under QEMU (no KVM in this sandbox, so TCG â€” slow):
 
 ```sh
 qemu-system-x86_64 -m 2048 -smp 2 -nographic -no-reboot \
@@ -342,7 +371,7 @@ The live user password is `live`. Evidence logs live in [`docs/`](docs/).
 ## Roadmap
 
 - [ ] Host the signed archive over HTTPS and point the source at it
-- [ ] Deepin-style theming pass (icons, Qt style, panel layout)
+- [x] Deepin-style theming pass (Kvantum Qt style, Papirus-Dark icons, top panel + Plank dock, slick-greeter, Plymouth splash)
 - [ ] Custom installer branding
 - [ ] A `deepblue-meta` metapackage to pull in the default desktop set
 
@@ -350,7 +379,7 @@ The live user password is `live`. Evidence logs live in [`docs/`](docs/).
 
 <div align="center">
 
-**DeepBlue Linux** — built with Debian’s [`live-build`](https://wiki.debian.org/DebianLive) · release **1.0 “Cobalt”**
+**DeepBlue Linux** â€” built with Debianâ€™s [`live-build`](https://wiki.debian.org/DebianLive) Â· release **1.0 â€śCobaltâ€ť**
 
 *Practical ownership is yours; the Free Software stack is used under licence. See [`docs/OWNERSHIP.md`](docs/OWNERSHIP.md).*
 
