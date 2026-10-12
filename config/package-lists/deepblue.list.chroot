@@ -84,6 +84,16 @@ unattended-upgrades
 apparmor
 deepblue-security
 
+# --- Secure Boot (UEFI) ---
+# live-build's binary_grub-efi looks for these in the chroot: when present it
+# puts shim (Microsoft-signed) at EFI/BOOT/BOOTX64.EFI and Debian-signed GRUB
+# at grubx64.efi, so the ISO boots with Secure Boot enabled. Listed explicitly
+# because --apt-recommends false means the Recommends chain is not pulled in.
+# grub-efi-amd64-bin supplies the modules that grub-cpmodules embeds.
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+shim-signed
+
 # --- Apps ---
 firefox-esr
 mousepad

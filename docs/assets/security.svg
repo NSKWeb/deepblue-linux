@@ -126,7 +126,7 @@
 
   <text x="432" y="656" class="se-t se-d" font-weight="700">Known limitations — stated plainly, not hidden</text>
   <circle cx="442" cy="682" r="4" fill="#ea580c"/>
-  <text x="456" y="687" class="se-t se-p">Secure Boot is opt-in: the ISO boots unsigned until you enrol the MOK (one reboot).</text>
+  <text x="456" y="687" class="se-t se-p">Secure Boot is on, but the chain ends in Debian's key — a self-built kernel needs a MOK.</text>
   <circle cx="442" cy="708" r="4" fill="#ea580c"/>
   <text x="456" y="713" class="se-t se-p">LUKS passphrase can be lost — there is no recovery key unless you make one.</text>
   <circle cx="442" cy="734" r="4" fill="#ea580c"/>

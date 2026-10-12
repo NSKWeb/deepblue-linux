@@ -26,6 +26,9 @@ if ! mount -t sysfs sysfs /tmp/.deepblue-sysfs-test 2>/dev/null; then
 fi
 rm -rf /tmp/.deepblue-sysfs-test 2>/dev/null || true
 
+# --uefi-secure-boot enable (not the default "auto"): fail the build if
+# shim-signed / grub-efi-amd64-signed are missing, rather than silently
+# shipping an unsigned UEFI image.
 lb config \
   --distribution trixie \
   --architectures amd64 \
@@ -37,6 +40,7 @@ lb config \
   --iso-publisher "DeepBlue Project; https://example.org" \
   --iso-volume "DEEPBLUE" \
   --bootappend-live "boot=live components hostname=deepblue username=deepblue locales=en_US.UTF-8 keyboard-layouts=us" \
+  --uefi-secure-boot enable \
   --memtest none \
   --loadlin false \
   --apt-indices false \
