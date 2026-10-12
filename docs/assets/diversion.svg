@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="How deepblue-base diverts base-files to own /etc/os-release">
+  <defs>
+    <linearGradient id="hdr3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c2d12"/><stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#b45309"/>
+    </marker>
+    <marker id="a3b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/>
+    </marker>
+    <style>
+      .t { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .ttl{ font-size: 23px; font-weight: 700; fill:#fff7ed; }
+      .h { font-size: 18px; font-weight: 700; fill:#0f172a; }
+      .d { font-size: 14px; fill:#334155; }
+      .m { font-family: Consolas, monospace; font-size: 14px; fill:#0f172a; }
+      .cap{ font-size: 13px; fill:#64748b; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="620" fill="#fffbeb"/>
+  <rect x="0" y="0" width="1200" height="66" fill="url(#hdr3)"/>
+  <text x="30" y="43" class="t ttl">Why the branding survives upgrades — dpkg diversions</text>
+  <text x="1170" y="43" class="t" font-size="14" fill="#fed7aa" text-anchor="end">deepblue-base 1.0.0</text>
+
+  <!-- base-files box -->
+  <rect x="40" y="110" width="330" height="150" rx="12" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <text x="60" y="142" class="t h">base-files (Debian)</text>
+  <text x="60" y="172" class="m">ships /etc/os-release</text>
+  <text x="60" y="196" class="m">ships /etc/issue</text>
+  <text x="60" y="220" class="m">ships /etc/issue.net</text>
+  <text x="60" y="246" class="t cap">Essential package — upgrades often</text>
+
+  <!-- deepblue-base box -->
+  <rect x="830" y="110" width="330" height="150" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="850" y="142" class="t h">deepblue-base (yours)</text>
+  <text x="850" y="172" class="m">owns /etc/os-release</text>
+  <text x="850" y="196" class="m">owns /etc/issue, .net</text>
+  <text x="850" y="220" class="m">owns /etc/lsb-release</text>
+  <text x="850" y="246" class="t cap">its copy is NOT diverted</text>
+
+  <!-- diversion arrow: base-files copy moves aside -->
+  <path d="M370 185 C 470 185, 470 300, 370 300" stroke="#dc2626" stroke-width="2.5" fill="none" marker-end="url(#a3b)"/>
+  <text x="470" y="255" class="t cap" text-anchor="middle" fill="#dc2626">base-files’ copy</text>
+  <text x="470" y="274" class="t cap" text-anchor="middle" fill="#dc2626">diverted away</text>
+
+  <!-- deepblue arrow wins -->
+  <path d="M830 185 C 700 185, 700 300, 830 300" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#a3)"/>
+
+  <!-- resulting file -->
+  <rect x="430" y="256" width="340" height="96" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="2.5"/>
+  <text x="600" y="286" class="t h" text-anchor="middle">/etc/os-release</text>
+  <text x="600" y="312" class="m" text-anchor="middle" fill="#15803d">PRETTY_NAME="DeepBlue Linux 1.0"</text>
+  <text x="600" y="334" class="t cap" text-anchor="middle">the DeepBlue version wins</text>
+
+  <!-- preinst code block -->
+  <rect x="40" y="396" width="1120" height="196" rx="12" fill="#0b1220"/>
+  <text x="60" y="424" class="t" font-size="14" fill="#fca5a5">preinst — runs before unpack</text>
+  <text x="60" y="452" class="m" fill="#e2e8f0">for f in /etc/os-release /etc/lsb-release /etc/issue /etc/issue.net; do</text>
+  <text x="60" y="478" class="m" fill="#fde047">  # drop debootstrap’s leftover local diversion, else ours clashes</text>
+  <text x="60" y="504" class="m" fill="#67e8f9">  dpkg-divert --local --remove --no-rename "$f" 2&gt;/dev/null || true</text>
+  <text x="60" y="530" class="m" fill="#67e8f9">  dpkg-divert --package deepblue-base --divert "${f}.deepblue" --no-rename "$f"</text>
+  <text x="60" y="556" class="m" fill="#e2e8f0">done</text>
+  <text x="60" y="580" class="t cap" fill="#94a3b8">Verified: reinstalling base-files leaves DeepBlue’s os-release intact; purging restores Debian’s.</text>
+</svg>

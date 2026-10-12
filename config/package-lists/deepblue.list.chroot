@@ -1,0 +1,73 @@
+# --- Live system core ---
+live-boot
+live-config
+live-config-systemd
+sudo
+user-setup
+locales
+console-setup
+keyboard-configuration
+
+# --- Kernel & firmware ---
+linux-image-amd64
+linux-headers-amd64
+firmware-linux-free
+firmware-linux-nonfree
+firmware-iwlwifi
+firmware-realtek
+
+# --- Base utilities ---
+apt
+bash-completion
+curl
+wget
+git
+nano
+vim-tiny
+htop
+pciutils
+usbutils
+rsync
+unzip
+zip
+ca-certificates
+network-manager
+net-tools
+iputils-ping
+
+# --- Display / graphics ---
+xorg
+xserver-xorg
+xinit
+lightdm
+lightdm-gtk-greeter
+slick-greeter
+
+# --- Desktop: LXQt (Qt-based, Deepin-like feel) ---
+lxqt-core
+lxqt-session
+openbox
+qterminal
+pcmanfm-qt
+lxqt-panel
+lxqt-config
+lxqt-powermanagement
+obconf-qt
+
+# --- Fonts & theming ---
+fonts-dejavu
+fonts-noto
+fonts-noto-cjk
+fonts-noto-color-emoji
+papirus-icon-theme
+arc-theme
+
+# --- Apps ---
+firefox-esr
+mousepad
+galculator
+vlc
+pavucontrol
+nm-tray
+deepblue-base
+deepblue-archive-keyring

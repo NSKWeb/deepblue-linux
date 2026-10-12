@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" width="1100" height="560" role="img" aria-label="DeepBlue boot and apt verification terminal transcript">
+  <defs>
+    <linearGradient id="tb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/><stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <style>
+      .t { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 15px; }
+      .g { fill:#4ade80; } .c { fill:#67e8f9; } .w { fill:#e2e8f0; }
+      .y { fill:#fde047; } .m { fill:#94a3b8; } .p { fill:#f472b6; }
+    </style>
+  </defs>
+  <rect width="1100" height="560" rx="14" fill="url(#tb)"/>
+  <rect x="0" y="0" width="1100" height="40" rx="14" fill="#111c2e"/>
+  <circle cx="26" cy="20" r="6" fill="#ff5f56"/><circle cx="46" cy="20" r="6" fill="#ffbd2e"/><circle cx="66" cy="20" r="6" fill="#27c93f"/>
+  <text x="550" y="25" class="t m" text-anchor="middle">DeepBlue Linux — live boot &amp; signed-archive verification</text>
+
+  <g class="t">
+    <text x="28" y="76" class="m"># 1) boot the live ISO under QEMU (serial console)</text>
+    <text x="28" y="100" class="c">$</text><text x="46" y="100" class="w">qemu-system-x86_64 -cdrom DeepBlue-Linux-1.0-amd64.iso -nographic …</text>
+    <text x="28" y="126" class="m">… live-boot mounts the squashfs, systemd reaches multi-user …</text>
+    <text x="28" y="152" class="g">DeepBlue Linux 1.0 (Cobalt)  deepblue ttyS0</text>
+    <text x="28" y="174" class="m">(that banner is /etc/issue, owned by the deepblue-base package)</text>
+    <text x="28" y="198" class="y">deepblue login:</text>
+
+    <text x="28" y="240" class="m"># 2) confirm the identity files</text>
+    <text x="28" y="264" class="c">$</text><text x="46" y="264" class="w">cat /etc/os-release</text>
+    <text x="28" y="288" class="g">PRETTY_NAME="DeepBlue Linux 1.0"</text>
+    <text x="28" y="310" class="g">ID=deepblue  ID_LIKE=debian  VERSION_CODENAME=cobalt</text>
+
+    <text x="28" y="352" class="m"># 3) update from our own signed archive</text>
+    <text x="28" y="376" class="c">$</text><text x="46" y="376" class="w">apt-get update</text>
+    <text x="28" y="400" class="w">Get:1 <tspan class="g">file:/usr/share/deepblue/repo</tspan> cobalt InRelease [1812 B]</text>
+    <text x="28" y="422" class="g">  ✓ validated with /usr/share/keyrings/deepblue-archive-keyring.gpg</text>
+
+    <text x="28" y="464" class="m"># 4) deepblue-base comes from DeepBlue Linux:cobalt</text>
+    <text x="28" y="488" class="c">$</text><text x="46" y="488" class="w">apt-cache policy deepblue-base</text>
+    <text x="28" y="512" class="w">Installed: <tspan class="y">1.0.0</tspan>   Candidate: <tspan class="y">1.0.0</tspan></text>
+    <text x="28" y="534" class="g">*** 1.0.0 500 file:/usr/share/deepblue/repo cobalt/main amd64 Packages</text>
+  </g>
+</svg>

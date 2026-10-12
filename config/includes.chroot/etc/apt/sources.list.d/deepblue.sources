@@ -1,0 +1,5 @@
+Types: deb
+URIs: file:///usr/share/deepblue/repo
+Suites: cobalt
+Components: main
+Signed-By: /usr/share/keyrings/deepblue-archive-keyring.gpg

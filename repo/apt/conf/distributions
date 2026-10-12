@@ -1,0 +1,8 @@
+Origin: DeepBlue
+Label: DeepBlue Linux
+Suite: cobalt
+Codename: cobalt
+Architectures: amd64
+Components: main
+Description: DeepBlue Linux 1.0 (Cobalt) packages
+SignWith: B55FF60B839AECD1

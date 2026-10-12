@@ -1,0 +1,24 @@
+# live-build output
+/binary
+/chroot
+/cache
+/local
+/.build
+/auto
+*.iso
+*.iso.sha256
+*.hybrid.iso
+*.files
+*.packages
+*.packages.install
+*.packages.live
+*.contents
+*.modified_timestamps
+build.log
+build*.log
+
+# Never commit the private signing keyring
+repo/gnupg/
+# Built packages / archive db
+repo/apt/db/
+*.deb

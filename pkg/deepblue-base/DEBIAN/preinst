@@ -1,0 +1,22 @@
+#!/bin/sh
+# base-files ships /etc/os-release, /etc/issue and /etc/issue.net; lsb-release
+# ships /etc/lsb-release. Divert them so this package can own the distribution
+# identity, as official derivatives do.
+#
+# --no-rename is deliberate: we do not want the current files moved aside, we
+# are about to replace their contents with the DeepBlue versions.
+set -e
+
+for f in /etc/os-release /etc/lsb-release /etc/issue /etc/issue.net; do
+    # debootstrap leaves a local diversion on /etc/os-release which would
+    # clash with ours; drop it first.
+    if dpkg-divert --list "$f" 2>/dev/null | grep -q "^local diversion"; then
+        dpkg-divert --local --remove --no-rename "$f" >/dev/null 2>&1 || true
+    fi
+
+    if ! dpkg-divert --list "$f" 2>/dev/null | grep -q "by deepblue-base"; then
+        dpkg-divert --package deepblue-base --divert "${f}.deepblue" --no-rename "$f" >/dev/null
+    fi
+done
+
+exit 0

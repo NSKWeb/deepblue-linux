@@ -1,0 +1,12 @@
+DeepBlue Linux installer boot test (QEMU, serial console)
+ISO: DeepBlue-Linux-1.0-amd64.iso (installer-enabled)
+Kernel/initrd: /install/vmlinuz + /install/initrd.gz (textual installer)
+
+Dialog flow observed:
+  CD-ROM            QEMU
+  [!!] Select a language
+  [!!] Select your location
+  [!!] Configure the keyboard
+  Detecting hardware to find installation media
+  Detecting network hardware
+  Detecting link on ens3

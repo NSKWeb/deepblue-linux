@@ -1,0 +1,13 @@
+Package: deepblue-base
+Version: 1.0.0
+Architecture: all
+Maintainer: DeepBlue Project <maintainer@deepblue.example>
+Installed-Size: 120
+Depends: base-files
+Section: metapackages
+Priority: optional
+Description: DeepBlue Linux base identity
+ Owns the DeepBlue Linux distribution identity: /etc/os-release,
+ /etc/lsb-release, TTY banners and the release marker under
+ /etc/deepblue. Installing this package on a Debian system turns it
+ into DeepBlue Linux.

@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 860" width="1240" height="860" role="img" aria-label="DeepBlue Linux architecture and build pipeline">
+  <defs>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a4a86"/><stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+    <style>
+      .t  { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .ttl{ font-size: 22px; font-weight: 700; fill:#0f172a; }
+      .h  { font-size: 18px; font-weight: 700; fill:#e0f2fe; }
+      .s  { font-size: 14px; fill:#cbd5e1; }
+      .d  { font-size: 14px; fill:#0f172a; }
+      .dm { font-size: 13px; fill:#475569; }
+      .lbl{ font-size: 14px; font-weight: 600; fill:#0e7490; }
+      .lblg{ font-size: 14px; font-weight: 600; fill:#15803d; }
+    </style>
+  </defs>
+
+  <rect width="1240" height="860" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1240" height="64" fill="url(#hdr)"/>
+  <text x="30" y="42" class="t" font-size="24" font-weight="700" fill="#f0f9ff">DeepBlue Linux — build pipeline &amp; ownership model</text>
+  <text x="1210" y="42" class="t" font-size="15" fill="#bae6fd" text-anchor="end">1.0 “Cobalt”</text>
+
+  <!-- ===== Row 1: sources ===== -->
+  <text x="30" y="98" class="t ttl">1 · Sources in this repository</text>
+
+  <g>
+    <rect x="30" y="112" width="370" height="128" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+    <rect x="30" y="112" width="370" height="34" rx="12" fill="#ecfeff"/>
+    <text x="46" y="135" class="t h" fill="#0e7490">config/</text>
+    <text x="46" y="170" class="t d">package-lists · hooks · includes</text>
+    <text x="46" y="192" class="t dm">live-build tree: which packages,</text>
+    <text x="46" y="211" class="t dm">chroot hooks, apt source, keyring</text>
+  </g>
+  <g>
+    <rect x="435" y="112" width="370" height="128" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+    <rect x="435" y="112" width="370" height="34" rx="12" fill="#ecfeff"/>
+    <text x="451" y="135" class="t h" fill="#0e7490">pkg/</text>
+    <text x="451" y="170" class="t d">deepblue-base · archive-keyring</text>
+    <text x="451" y="192" class="t dm">Debian source packages built with</text>
+    <text x="451" y="211" class="t dm">dpkg-deb; own the distro identity</text>
+  </g>
+  <g>
+    <rect x="840" y="112" width="370" height="128" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+    <rect x="840" y="112" width="370" height="34" rx="12" fill="#ecfeff"/>
+    <text x="856" y="135" class="t h" fill="#0e7490">repo/</text>
+    <text x="856" y="170" class="t d">signed APT archive (reprepro)</text>
+    <text x="856" y="192" class="t dm">release “cobalt” · InRelease signed</text>
+    <text x="856" y="211" class="t dm">with the DeepBlue signing key</text>
+  </g>
+
+  <!-- arrows down to build -->
+  <path d="M215 240 V292" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M620 240 V292" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M1025 240 V292" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+
+  <!-- ===== Row 2: build ===== -->
+  <text x="30" y="286" class="t ttl">2 · Build (build.sh)</text>
+  <rect x="180" y="300" width="880" height="96" rx="14" fill="#0b2f52" stroke="#1e6ea8" stroke-width="2"/>
+  <text x="620" y="330" class="t h" text-anchor="middle" font-size="19">tools/build-repo.sh  →  dpkg-deb + reprepro  →  lb build</text>
+  <text x="620" y="358" class="t s" text-anchor="middle">builds each pkg/*, publishes &amp; re-signs the archive, bakes it into the ISO, then runs live-build</text>
+  <text x="620" y="381" class="t s" text-anchor="middle">bootstrap → install packages in chroot → squashfs → xorriso → hybrid ISO</text>
+
+  <path d="M620 396 V452" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+
+  <!-- ===== Row 3: ISO ===== -->
+  <text x="30" y="450" class="t ttl">3 · Live ISO — DeepBlue-Linux-1.0-amd64.iso</text>
+  <rect x="30" y="462" width="1180" height="196" rx="14" fill="#ffffff" stroke="#0ea5e9" stroke-width="2"/>
+  <g>
+    <rect x="52" y="486" width="272" height="150" rx="10" fill="#f0f9ff" stroke="#7dd3fc"/>
+    <text x="70" y="514" class="t d" font-weight="700">Live system (squashfs)</text>
+    <text x="70" y="540" class="t dm">LXQt session + LightDM</text>
+    <text x="70" y="562" class="t dm">user “deepblue”, autologin</text>
+    <text x="70" y="584" class="t dm">DeepBlue wallpaper/theme</text>
+    <text x="70" y="606" class="t dm">debian-installer-launcher</text>
+    <text x="70" y="628" class="t dm">identity from deepblue-base</text>
+  </g>
+  <g>
+    <rect x="342" y="486" width="272" height="150" rx="10" fill="#f0f9ff" stroke="#7dd3fc"/>
+    <text x="360" y="514" class="t d" font-weight="700">Debian installer</text>
+    <text x="360" y="540" class="t dm">textual + graphical</text>
+    <text x="360" y="562" class="t dm">udebs in /dists</text>
+    <text x="360" y="584" class="t dm">“Start installer” entries</text>
+    <text x="360" y="606" class="t dm">installs a real DeepBlue</text>
+    <text x="360" y="628" class="t dm">system to disk</text>
+  </g>
+  <g>
+    <rect x="632" y="486" width="272" height="150" rx="10" fill="#f0f9ff" stroke="#7dd3fc"/>
+    <text x="650" y="514" class="t d" font-weight="700">Boot entries</text>
+    <text x="650" y="540" class="t dm">BIOS — isolinux</text>
+    <text x="650" y="562" class="t dm">UEFI — grub/efi.img</text>
+    <text x="650" y="584" class="t dm">El Torito hybrid</text>
+    <text x="650" y="606" class="t dm">volume label DEEPBLUE</text>
+    <text x="650" y="628" class="t dm">BIOS + UEFI verified</text>
+  </g>
+  <g>
+    <rect x="922" y="486" width="266" height="150" rx="10" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="940" y="514" class="t d" font-weight="700">Own archive on the ISO</text>
+    <text x="940" y="540" class="t dm">/usr/share/deepblue/repo</text>
+    <text x="940" y="562" class="t dm">dists/cobalt + pool/</text>
+    <text x="940" y="584" class="t dm">deb822 source file</text>
+    <text x="940" y="606" class="t dm">/etc/apt/sources.list.d/</text>
+    <text x="940" y="628" class="t dm">keyring in /usr/share/keyrings</text>
+  </g>
+
+  <path d="M620 658 V716" stroke="#22c55e" stroke-width="3" fill="none" marker-end="url(#arrg)"/>
+
+  <!-- ===== Row 4: installed + loop ===== -->
+  <text x="30" y="714" class="t ttl">4 · Installed system — your own update loop</text>
+  <rect x="30" y="726" width="700" height="106" rx="14" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+  <text x="52" y="758" class="t d" font-weight="700" font-size="16">DeepBlue system</text>
+  <text x="52" y="784" class="t dm">/etc/os-release → DeepBlue Linux 1.0 (Cobalt)</text>
+  <text x="52" y="806" class="t dm">deepblue-base &amp; keyring installed; diversions protect the identity</text>
+
+  <rect x="770" y="726" width="440" height="106" rx="14" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+  <text x="792" y="758" class="t d" font-weight="700" font-size="16">apt update  ⇄  signed archive</text>
+  <text x="792" y="784" class="t dm">InRelease validated by the shipped keyring — no prompts</text>
+  <text x="792" y="806" class="t dm">only holders of the private key can publish trusted packages</text>
+
+  <!-- loop arrow -->
+  <path d="M730 779 H770" stroke="#22c55e" stroke-width="3" fill="none" marker-end="url(#arrg)"/>
+  <path d="M1210 779 H1226 V120 H1030" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="6 5" fill="none" marker-end="url(#arrg)"/>
+  <text x="1222" y="450" class="t lblg" text-anchor="middle" transform="rotate(90 1222 450)">new DeepBlue packages flow back into the archive</text>
+</svg>

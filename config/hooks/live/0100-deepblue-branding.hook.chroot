@@ -1,0 +1,52 @@
+#!/bin/sh
+# DeepBlue Linux branding hook (runs inside the chroot)
+set -e
+
+USERNAME="deepblue"
+
+# --- Desktop session for the live user ---
+mkdir -p /home/${USERNAME}
+cat > /home/${USERNAME}/.xinitrc <<'XINITRC'
+#!/bin/sh
+exec startlxqt
+XINITRC
+chmod 755 /home/${USERNAME}/.xinitrc
+chown 1000:1000 /home/${USERNAME}/.xinitrc 2>/dev/null || true
+
+# --- Welcome message on login ---
+cat > /etc/profile.d/deepblue-welcome.sh <<'WELCOME'
+#!/bin/sh
+if [ -n "$PS1" ]; then
+  printf '\n  Welcome to DeepBlue Linux 1.0 (Cobalt)\n  A Deepin-inspired Debian live system.\n\n'
+fi
+WELCOME
+chmod 755 /etc/profile.d/deepblue-welcome.sh
+
+# --- Default display manager ---
+mkdir -p /etc/X11
+echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
+
+# --- LightDM: DeepBlue branding + auto-login into LXQt ---
+mkdir -p /etc/lightdm/lightdm.conf.d
+cat > /etc/lightdm/lightdm.conf.d/60-deepblue.conf <<'LDM'
+[Seat:*]
+greeter-session=lightdm-gtk-greeter
+user-session=lxqt
+autologin-user=deepblue
+autologin-user-timeout=0
+LDM
+
+# --- LXQt: set wallpaper for the live user ---
+mkdir -p /home/${USERNAME}/.config/pcmanfm-qt/lxqt
+cat > /home/${USERNAME}/.config/pcmanfm-qt/lxqt/settings.conf <<'PCM'
+[Desktop]
+Wallpaper=/usr/share/backgrounds/deepblue/wallpaper.png
+WallpaperMode=stretch
+PCM
+chown -R 1000:1000 /home/${USERNAME}/.config 2>/dev/null || true
+
+# --- skel so new users inherit branding ---
+mkdir -p /etc/skel/.config/pcmanfm-qt/lxqt
+cp /home/${USERNAME}/.config/pcmanfm-qt/lxqt/settings.conf /etc/skel/.config/pcmanfm-qt/lxqt/settings.conf 2>/dev/null || true
+
+exit 0
