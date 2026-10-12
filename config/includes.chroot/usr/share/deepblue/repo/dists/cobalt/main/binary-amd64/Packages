@@ -1,0 +1,38 @@
+Package: deepblue-archive-keyring
+Version: 1.0.0
+Architecture: all
+Maintainer: DeepBlue Project <maintainer@deepblue.example>
+Installed-Size: 8
+Depends: gpgv
+Priority: optional
+Section: misc
+Filename: pool/main/d/deepblue-archive-keyring/deepblue-archive-keyring_1.0.0_all.deb
+Size: 2152
+SHA256: 0b50817766f8a0e1c51b06a19d87187b63527b42d61c4bb88add3232d451344c
+SHA1: f89a3e7809d86612624d1b40fe548ffe08df1b11
+MD5sum: 983acde248360f0419d379e0471b5c06
+Description: GnuPG archive key of the DeepBlue Linux archive
+ Installs the public key used to verify packages from the DeepBlue
+ Linux archive, so APT can validate the release "cobalt" without
+ prompting. The matching private key never leaves the release
+ engineering environment.
+
+Package: deepblue-base
+Version: 1.0.0
+Architecture: all
+Maintainer: DeepBlue Project <maintainer@deepblue.example>
+Installed-Size: 120
+Depends: base-files
+Priority: optional
+Section: metapackages
+Filename: pool/main/d/deepblue-base/deepblue-base_1.0.0_all.deb
+Size: 1960
+SHA256: 396d364a66c54c9ef3fbec35dc4e0c17f7a9b7c04e6f6a6a1c6a12a87cd72f39
+SHA1: c39488da70182b90a011f0008c6ab48eb04d1ceb
+MD5sum: 4ecd4f82f6ca088d60faa2c3501afee7
+Description: DeepBlue Linux base identity
+ Owns the DeepBlue Linux distribution identity: /etc/os-release,
+ /etc/lsb-release, TTY banners and the release marker under
+ /etc/deepblue. Installing this package on a Debian system turns it
+ into DeepBlue Linux.
+

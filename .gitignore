@@ -16,3 +16,9 @@
 *.modified_timestamps
 build.log
 build*.log
+
+# Never commit the private signing keyring
+repo/gnupg/
+# Built packages / archive db
+repo/apt/db/
+*.deb

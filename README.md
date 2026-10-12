@@ -40,23 +40,58 @@ The built ISO is intentionally **not** committed to this repository (it is
 large and fully reproducible from the source here). Build it yourself with
 `./build.sh`.
 
+## Ownership
+
+DeepBlue Linux is your own distribution in the practical sense: the identity
+files, the `deepblue-base` package, the signed package archive and the release
+versioning are all yours and under your control. The underlying Debian/LXQt/
+kernel code is Free Software owned by its authors and is used under licence —
+see [`docs/OWNERSHIP.md`](docs/OWNERSHIP.md) for the full, honest picture.
+
+## Packages and archive
+
+DeepBlue ships its identity as real Debian packages rather than loose files:
+
+| Package                    | Purpose                                             |
+| -------------------------- | --------------------------------------------------- |
+| `deepblue-base`            | Distro identity (`os-release`, `lsb-release`, banners, release marker). Diverts the `base-files`/`lsb-release` copies so upgrades cannot clobber the branding. |
+| `deepblue-archive-keyring` | Public key for the DeepBlue archive                 |
+
+Both are built from source in `pkg/` and published to a **signed APT archive**
+(`repo/`) via `tools/build-repo.sh`. The archive is wired into the ISO at
+`/usr/share/deepblue/repo` with a `deb822` source in
+`/etc/apt/sources.list.d/deepblue.sources`, so the installed system can update
+DeepBlue packages from its own archive.
+
 ## Repository layout
 
 ```
 config/
   package-lists/deepblue.list.chroot      # packages installed into the live system
   package-lists/installer.list.chroot     # debian-installer-launcher
+  packages.chroot/                        # local .deb files (deepblue-base, keyring)
   hooks/live/0100-deepblue-branding.hook.chroot
-                                          # runs in the chroot: user session,
-                                          # wallpaper, welcome message, DM
-  includes.chroot/etc/                    # os-release, lsb-release, issue banners
+                                          # runs in the chroot: session, wallpaper,
+                                          # welcome message, display manager
+  includes.chroot/etc/apt/sources.list.d/deepblue.sources
+  includes.chroot/usr/share/deepblue/repo # signed archive shipped on the ISO
+  includes.chroot/usr/share/keyrings/deepblue-archive-keyring.gpg
   includes.chroot/usr/share/backgrounds/deepblue/wallpaper.png
   includes.chroot/usr/share/deepblue/logo/deepblue-logo.png
-  includes.chroot/usr/share/pixmaps/deepblue-logo.png
   includes.binary/isolinux/splash.png     # BIOS boot splash
+pkg/                                      # Debian source packages
+  deepblue-base/
+  deepblue-archive-keyring/
+repo/                                     # signed APT archive (reprepro)
+  apt/conf/distributions                  # release "cobalt"
+  apt/dists/cobalt/                       # signed indices
+  apt/pool/                               # package files
+  deepblue-archive-keyring.gpg            # public key
+  gnupg/                                  # private signing keyring (gitignored)
+tools/build-repo.sh                       # build + publish + sign packages
 setup-host.sh                             # install toolchain + container workaround
-build.sh                                  # configure + build
-docs/                                     # boot/login/gui/installer test evidence
+build.sh                                  # configure + build the ISO
+docs/                                     # boot/login/gui/installer evidence + ownership
 ```
 
 ## Building

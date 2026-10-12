@@ -1,0 +1,20 @@
+Origin: DeepBlue
+Label: DeepBlue Linux
+Suite: cobalt
+Codename: cobalt
+Date: Mon, 12 Oct 2026 05:57:13 UTC
+Architectures: amd64
+Components: main
+Description: DeepBlue Linux 1.0 (Cobalt) packages
+MD5Sum:
+ 990fe8431554fd78ace8acf0e213c937 1421 main/binary-amd64/Packages
+ 6682b0e01c5a328c7f8ffdd813756252 724 main/binary-amd64/Packages.gz
+ c5ebd9f7422a500d8d2a464e291e30c0 141 main/binary-amd64/Release
+SHA1:
+ 52fd00afbceb0b4045b2ab486a6008c2912f6c4c 1421 main/binary-amd64/Packages
+ d5bced7aed7b6b803b0caa8774353b1a7324d2e8 724 main/binary-amd64/Packages.gz
+ 100efb271f4ae23cad200845ed9a8b367beabd4c 141 main/binary-amd64/Release
+SHA256:
+ ac1530744fe7243e9cb5610aca5714f4b40f9792635c36704d81c5159dd7ce4b 1421 main/binary-amd64/Packages
+ ba197550da455b19da93b93f0541ecc001f3741faa1e1ad55b6a76c795871f76 724 main/binary-amd64/Packages.gz
+ a42874f6d1ead13db9f61ec7f00c89d09f51b2efc8b995ea9ecefddaabf41248 141 main/binary-amd64/Release

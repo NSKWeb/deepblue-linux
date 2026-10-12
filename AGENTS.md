@@ -63,3 +63,43 @@ Debian's `lightdm-autologin` PAM stack uses `pam_permit.so`, so no
 - Do NOT delete `.build/config`: `lb build` then fails with
   `the following stage is required to be done first: config`. Re-run `lb config`
   (exactly as in `build.sh`) if you do.
+
+## Packages and signed archive (ownership)
+The distribution identity ships as real Debian packages, not loose files:
+
+- `pkg/deepblue-base` — owns `/etc/os-release`, `/etc/lsb-release`,
+  `/etc/issue`, `/etc/issue.net`, `/etc/deepblue/release`. It **diverts**
+  the copies from `base-files`/`lsb-release` so an upgrade of those packages
+  cannot overwrite the branding (verified: reinstalling `base-files` leaves
+  the DeepBlue `os-release` intact).
+- `pkg/deepblue-archive-keyring` — the public key for the DeepBlue archive.
+
+`tools/build-repo.sh` builds each `pkg/*` with `dpkg-deb` and publishes it
+into the reprepro archive under `repo/apt` (release "cobalt"), signing the
+indices with the key in `repo/gnupg` (gitignored — **never commit it**).
+`build.sh` runs it automatically and copies the archive into
+`config/includes.chroot/usr/share/deepblue/repo` so the ISO ships its own repo.
+
+### dpkg-divert gotcha (important)
+`base-files` ships `/etc/os-release`, so an unconditional `dpkg-divert
+--package <pkg> ... --rename` **fails at unpack time** with
+`trying to overwrite '/etc/os-release'`. Two things fix it:
+
+1. Use `--no-rename` — we do not want the file moved aside, we replace its
+   contents.
+2. debootstrap leaves a *local* diversion on `/etc/os-release`
+   (`→ /etc/os-release.debootstrap`) which clashes with ours. The `preinst`
+   must drop it first, and **must pass `--local`**:
+   `dpkg-divert --local --remove --no-rename /etc/os-release`.
+   Without `--local`, dpkg (with `DPKG_MAINTSCRIPT_PACKAGE` set) scopes the
+   removal to the package and errors `mismatch on package`.
+
+The `prerm` must mirror the `preinst` exactly (`--package <pkg> --divert
+<f>.deepblue --no-rename --remove`).
+
+### Build environment gotcha (setgid)
+The workspace is an ext4 **idmapped** mount where new directories inherit the
+parent setgid bit, giving `DEBIAN/` mode `2755` and `dpkg-deb` fails with
+`control directory has bad permissions 2755`. `tools/build-repo.sh` runs
+`chmod g-s` on every `DEBIAN/` before building.
+

@@ -1,0 +1,13 @@
+Package: deepblue-archive-keyring
+Version: 1.0.0
+Architecture: all
+Maintainer: DeepBlue Project <maintainer@deepblue.example>
+Installed-Size: 8
+Depends: gpgv
+Section: misc
+Priority: optional
+Description: GnuPG archive key of the DeepBlue Linux archive
+ Installs the public key used to verify packages from the DeepBlue
+ Linux archive, so APT can validate the release "cobalt" without
+ prompting. The matching private key never leaves the release
+ engineering environment.

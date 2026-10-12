@@ -22,14 +22,6 @@ fi
 WELCOME
 chmod 755 /etc/profile.d/deepblue-welcome.sh
 
-# --- Release marker ---
-mkdir -p /etc/deepblue
-cat > /etc/deepblue/release <<'REL'
-DeepBlue Linux 1.0 (Cobalt)
-Base: Debian GNU/Linux trixie
-Desktop: LXQt
-REL
-
 # --- Default display manager ---
 mkdir -p /etc/X11
 echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager

@@ -1,0 +1,11 @@
+#!/bin/sh
+# Drop the diversions so base-files/lsb-release own these files again.
+set -e
+
+for f in /etc/os-release /etc/lsb-release /etc/issue /etc/issue.net; do
+    if dpkg-divert --list "$f" 2>/dev/null | grep -q "by deepblue-base"; then
+        dpkg-divert --package deepblue-base --divert "${f}.deepblue" --no-rename --remove "$f" >/dev/null
+    fi
+done
+
+exit 0

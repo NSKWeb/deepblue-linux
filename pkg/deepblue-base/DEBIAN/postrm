@@ -1,0 +1,7 @@
+#!/bin/sh
+# Restore the base-files version of os-release if we backed it up.
+if [ -e /etc/os-release.deepblue ]; then
+    mv -f /etc/os-release.deepblue /etc/os-release 2>/dev/null || true
+fi
+
+exit 0
