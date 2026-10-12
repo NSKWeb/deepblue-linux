@@ -1,0 +1,14 @@
+#!/bin/sh
+# Take ownership of /etc/nftables.conf from the nftables package, the same way
+# deepblue-base diverts base-files' /etc/os-release.
+#
+# --no-rename is deliberate: we are about to replace the file's contents with
+# the DeepBlue policy, not move the original aside.
+set -e
+
+f=/etc/nftables.conf
+if ! dpkg-divert --list "$f" 2>/dev/null | grep -q "by deepblue-security"; then
+    dpkg-divert --package deepblue-security --divert "${f}.nftables" --no-rename "$f" >/dev/null
+fi
+
+exit 0

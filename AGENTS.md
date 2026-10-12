@@ -177,3 +177,35 @@ Then, from Python, connect to `/tmp/qmon` and send `screendump /tmp/desktop.ppm`
 Serial console (login `deepblue` / `live`) is enough to check config files and
 that `plank`/`picom` are running; the screendump confirms the actual look.
 
+### Security package (`deepblue-security`)
+The hardening lives in one package, `pkg/deepblue-security/`, so it is
+inspectable and removable like any other Debian package. It ships:
+
+* `/etc/nftables.conf` — a default-deny ruleset. `nftables.service` loads that
+  exact path, so the package **diverts** the nftables package's own copy to
+  `/etc/nftables.conf.nftables` (`--no-rename`, same pattern as
+  `deepblue-base` and `/etc/os-release`). Without the divert, a `nftables`
+  upgrade would restore the permissive default.
+* `etc/apt/apt.conf.d/20deepblue-auto-upgrades` + `51deepblue-unattended-upgrades`
+  — enables unattended-upgrades, security pocket only, no forced reboot.
+* `etc/sysctl.d/90-deepblue-hardening.conf` — desktop-safe kernel hardening.
+* `DEBIAN/postinst` enables `nftables`, `unattended-upgrades` and `apparmor`
+  and syntax-checks the firewall **before** starting it (a bad ruleset would
+  otherwise cut the machine off the network on boot).
+
+Gotchas:
+
+* `nft -c -f /etc/nftables.conf` needs `CAP_NET_ADMIN`; in an unprivileged
+  container it fails with `Operation not permitted` on `flush ruleset` before
+  it ever parses the table. To syntax-check offline, drop the `flush` line and
+  check the `table` block, or just run the build on a host with the capability.
+* `--apt-recommends false` is set in `build.sh`, so any `Recommends` you rely
+  on (here, `apparmor`) must be listed explicitly in the package list.
+
+### Installer preseed
+`config/includes.installer/preseed.cfg` is read by live-build and changes the
+Debian installer's *defaults* — encrypted LVM partitioning, no root login,
+`deepblue-base deepblue-security` included. Verify it parses with
+`debconf-set-selections -c config/includes.installer/preseed.cfg`. Never
+preseed a disk passphrase: it would be stored in plaintext on the ISO.
+

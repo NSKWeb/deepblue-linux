@@ -1,0 +1,10 @@
+#!/bin/sh
+# Give /etc/nftables.conf back to the nftables package on removal.
+set -e
+
+f=/etc/nftables.conf
+if dpkg-divert --list "$f" 2>/dev/null | grep -q "by deepblue-security"; then
+    dpkg-divert --package deepblue-security --divert "${f}.nftables" --no-rename --remove "$f" >/dev/null
+fi
+
+exit 0

@@ -75,6 +75,15 @@ plymouth
 plymouth-themes
 plymouth-label
 
+# --- Security defaults ---
+# deepblue-security pulls in nftables + unattended-upgrades as Depends; the
+# Recommends (apparmor) is listed explicitly because the build runs with
+# --apt-recommends false.
+nftables
+unattended-upgrades
+apparmor
+deepblue-security
+
 # --- Apps ---
 firefox-esr
 mousepad

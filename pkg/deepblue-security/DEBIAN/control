@@ -1,0 +1,15 @@
+Package: deepblue-security
+Version: 1.0.0
+Architecture: all
+Maintainer: DeepBlue Project <maintainer@deepblue.example>
+Installed-Size: 32
+Depends: nftables, unattended-upgrades
+Recommends: apparmor
+Section: admin
+Priority: optional
+Description: DeepBlue Linux default security hardening
+ Turns on the security defaults DeepBlue ships: a default-deny nftables
+ firewall, automatic installation of Debian security updates, AppArmor
+ enforcement and a hardened kernel sysctl profile. Everything here is plain
+ configuration owned by this package, so it can be inspected, changed or
+ removed like any other Debian package.

@@ -96,7 +96,7 @@ qemu-system-x86_64 -m 2048 -smp 2 -enable-kvm \
 
 ### 6. Install to disk
 
-From the live session, double-click **Install DeepBlue** on the desktop (or pick **Start installer** at the boot menu), then follow the Debian installer: language → location → keyboard → disk → user → install. On first boot you get the installed DeepBlue system, which updates from its own signed archive.
+From the live session, double-click **Install DeepBlue** on the desktop (or pick **Start installer** at the boot menu), then follow the Debian installer: language → location → keyboard → disk → user → install. The guided partitioning is **encrypted (LUKS2) by default** — you will be asked for a disk passphrase; choose a strong one, because it is the only thing standing between a stolen laptop and your files, and there is no recovery key unless you make one. On first boot you get the installed DeepBlue system, which updates from its own signed archive and has the firewall, auto-updates and AppArmor switched on (see [Security](#-security--what-is-on-and-what-is-not)).
 
 ---
 
@@ -409,6 +409,79 @@ Signed-By: /usr/share/keyrings/deepblue-archive-keyring.gpg
 
 ---
 
+## 🔐 Security — what is on, and what is not
+
+<img src="docs/assets/security.svg" alt="Defence in depth: five layers from signed packages to disk encryption, the package trust chain, the controls the installer enables, and the honest remaining gaps" width="100%"/>
+
+DeepBlue treats security as **defence in depth**: several independent layers,
+each assuming the ones below it can fail. Nothing here is a from-scratch
+invention — it is Debian's own tooling, configured and switched on by default
+so you do not have to.
+
+### The layers, top to bottom
+
+| Layer | What it does | Where it lives |
+| --- | --- | --- |
+| **Signed packages** | `apt` refuses any package not signed by the DeepBlue key | [`repo/`](repo/) · `deepblue-archive-keyring` |
+| **Secure Boot** | Firmware refuses an unsigned bootloader/kernel (opt-in — see below) | [planned](docs/SECURE-BOOT.md) |
+| **Firewall + AppArmor** | Default-deny inbound traffic; per-program confinement | [`pkg/deepblue-security`](pkg/deepblue-security) |
+| **Timely updates** | Debian security fixes install themselves, daily | [`pkg/deepblue-security`](pkg/deepblue-security) |
+| **Disk encryption** | A stolen machine's disk is unreadable | [`config/includes.installer/preseed.cfg`](config/includes.installer/preseed.cfg) |
+
+### 1 · Default-deny firewall (nftables)
+
+The `deepblue-security` package ships a short, readable nftables policy at
+`/etc/nftables.conf`. **Inbound is dropped unless explicitly allowed**;
+loopback, replies to connections you opened, and ICMP (needed for path-MTU
+discovery) are the only things let through by default. SSH, mDNS and web ports
+are present as commented one-liners you uncomment if you actually run them.
+Forwarding is dropped too — this is a workstation, not a router.
+
+The package **diverts** nftables' own `/etc/nftables.conf`, the same
+`dpkg-divert` trick `deepblue-base` uses for `/etc/os-release`, so a Debian
+upgrade cannot silently restore the permissive default.
+
+### 2 · Automatic security updates
+
+`unattended-upgrades` is enabled with a policy that accepts **only the Debian
+security pocket** — vulnerability fixes, not unrelated version churn. Reboots
+are never forced; a kernel or glibc update waits for a reboot you choose.
+
+### 3 · AppArmor + kernel hardening
+
+AppArmor is installed and enabled, and a conservative `sysctl.d` profile
+closes the usual information leaks and attack surfaces: `dmesg` and kernel
+pointers restricted to root, unprivileged eBPF and perf restricted, IP
+forwarding off, ICMP redirects ignored, reverse-path filtering on, unprivileged
+user namespaces off. Every setting is desktop-safe — nothing here breaks a
+normal session.
+
+### 4 · Full-disk encryption by default
+
+The installer's preseed selects **encrypted LVM (LUKS2)** as the guided
+partitioning method, so the default path through "Install DeepBlue" produces an
+encrypted disk. The passphrase is **never** preseeded — you are asked for it,
+and only you know it. (Preseeding a disk passphrase would store it in plaintext
+on the ISO, which defeats the point.)
+
+### 5 · Secure Boot — the honest status
+
+The 1.0 ISO is **not** Secure-Boot signed, so on a UEFI machine you disable
+Secure Boot once to boot it. Fixing this properly has three routes, documented
+in [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md): reuse Debian's
+Microsoft-signed `shim` (cheap, no approval, planned next), a per-machine
+**MOK** for custom kernels, or your own **Microsoft-signed shim** (needs an EV
+certificate — the full-ownership end goal). Secure Boot stops bootkits; it does
+not replace disk encryption, and this project is explicit about the difference.
+
+> [!NOTE]
+> These controls live on the **installed** system. The live session is a
+> throwaway, auto-logged-in, `sudo`-capable environment by design — as on every
+> live distro, physical access to it is full access. Install to get the
+> hardening, and set a real password at the greeter.
+
+---
+
 ## Verified behaviour
 
 <img src="docs/assets/terminal-flow.svg" alt="Terminal transcript: live boot banner, os-release, apt update against the signed archive, apt-cache policy" width="100%"/>
@@ -463,9 +536,13 @@ config/                                   # live-build tree
   includes.chroot/usr/share/backgrounds/deepblue/wallpaper.png
   includes.chroot/usr/share/deepblue/logo/deepblue-logo.png
   includes.binary/isolinux/splash.png     # BIOS boot splash
+  includes.installer/preseed.cfg          # installer defaults: LUKS encryption,
+                                          #   no root login, deepblue-* packages
 pkg/                                      # Debian source packages (yours)
-  deepblue-base/
-  deepblue-archive-keyring/
+  deepblue-base/                          # distribution identity
+  deepblue-archive-keyring/               # archive public key
+  deepblue-security/                      # nftables, auto-updates, AppArmor,
+                                          #   sysctl hardening
 repo/                                     # signed APT archive (reprepro)
   apt/conf/distributions                  # release "cobalt"
   apt/dists/cobalt/                       # signed indices
@@ -483,8 +560,10 @@ docs/                                     # evidence, ownership notes, SVG asset
   assets/design-system.svg                #   palette, depth, type, motion
   assets/iso-anatomy.svg                  #   hybrid ISO layout + squashfs zoom
   assets/package-anatomy.svg              #   .deb members + signing trust chain
+  assets/security.svg                     #   defence-in-depth layers + gaps
   assets/ownership.svg · diversion.svg    #   ownership layers · dpkg diversion
   assets/terminal-flow.svg                #   verified boot/apt transcript
+  SECURE-BOOT.md                          #   shim / MOK / Microsoft signing plan
   preview.html                            #   browsable desktop preview
 ```
 
@@ -528,6 +607,8 @@ The live user password is `live`. Evidence logs live in [`docs/`](docs/).
 - [x] Deepin-style theming pass (Kvantum Qt style, Papirus-Dark icons, top panel + Plank dock, slick-greeter, Plymouth splash)
 - [x] Interactive desktop preview page ([`docs/preview.html`](docs/preview.html))
 - [x] Keep the ISO under GitHub's 2 GB release limit (~1.86 GB) with a documented trim pass
+- [x] Security defaults: default-deny nftables firewall, automatic security updates, AppArmor, kernel hardening, encrypted-disk installer default
+- [ ] Secure Boot: wire in Debian's Microsoft-signed `shim` (Option A in [`docs/SECURE-BOOT.md`](docs/SECURE-BOOT.md))
 - [ ] Custom installer branding
 - [ ] A `deepblue-meta` metapackage to pull in the default desktop set
 
