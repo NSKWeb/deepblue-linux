@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 780" width="1240" height="780" role="img" aria-label="DeepBlue design system: deep-ocean palette with hex values and roles, depth metaphor, typography scale, and motion principles">
+  <defs>
+    <linearGradient id="ds-hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a4a86"/><stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="ds-depth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dbeaff"/>
+      <stop offset="25%" stop-color="#7fb2ff"/>
+      <stop offset="50%" stop-color="#1c6fd6"/>
+      <stop offset="75%" stop-color="#0f2340"/>
+      <stop offset="100%" stop-color="#04101f"/>
+    </linearGradient>
+    <style>
+      .ds-t  { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .ds-h  { font-size: 16px; font-weight: 700; fill: #0e7490; }
+      .ds-p  { font-size: 12.5px; fill: #475569; }
+      .ds-d  { font-size: 13px; fill: #0f172a; }
+      .ds-m  { font-family: Consolas, "Courier New", monospace; font-size: 12px; fill: #0e7490; }
+      .ds-w  { font-size: 12.5px; fill: #dbeaff; }
+    </style>
+  </defs>
+
+  <rect width="1240" height="780" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1240" height="64" fill="url(#ds-hdr)"/>
+  <text x="30" y="42" class="ds-t" font-size="24" font-weight="700" fill="#f0f9ff">Design language — “deep ocean”: depth, calm, one accent</text>
+  <text x="1210" y="42" class="ds-t" font-size="15" fill="#bae6fd" text-anchor="end">one palette, two toolkits</text>
+
+  <!-- ============ 1 · palette ============ -->
+  <text x="30" y="102" class="ds-t ds-h">1 · Palette — one token set, role-named</text>
+
+  <g>
+    <!-- swatches: x, hex, name, role -->
+    <g transform="translate(30,118)">
+      <rect width="150" height="74" rx="10" fill="#04101f"/>
+      <text x="12" y="30" class="ds-t ds-w" font-weight="700">#04101f</text>
+      <text x="12" y="50" class="ds-t ds-w" font-size="11" opacity="0.8">--abyss</text>
+      <text x="12" y="66" class="ds-t ds-w" font-size="10" opacity="0.65">page background</text>
+    </g>
+    <g transform="translate(190,118)">
+      <rect width="150" height="74" rx="10" fill="#071c3d"/>
+      <text x="12" y="30" class="ds-t ds-w" font-weight="700">#071c3d</text>
+      <text x="12" y="50" class="ds-t ds-w" font-size="11" opacity="0.8">--deep</text>
+      <text x="12" y="66" class="ds-t ds-w" font-size="10" opacity="0.65">panels · bars</text>
+    </g>
+    <g transform="translate(350,118)">
+      <rect width="150" height="74" rx="10" fill="#0f2340"/>
+      <text x="12" y="30" class="ds-t ds-w" font-weight="700">#0f2340</text>
+      <text x="12" y="50" class="ds-t ds-w" font-size="11" opacity="0.8">--base</text>
+      <text x="12" y="66" class="ds-t ds-w" font-size="10" opacity="0.65">window base</text>
+    </g>
+    <g transform="translate(510,118)">
+      <rect width="150" height="74" rx="10" fill="#0a2e5b"/>
+      <text x="12" y="30" class="ds-t ds-w" font-weight="700">#0a2e5b</text>
+      <text x="12" y="50" class="ds-t ds-w" font-size="11" opacity="0.8">--navy</text>
+      <text x="12" y="66" class="ds-t ds-w" font-size="10" opacity="0.65">titlebars · headers</text>
+    </g>
+    <g transform="translate(670,118)">
+      <rect width="150" height="74" rx="10" fill="#1c6fd6"/>
+      <text x="12" y="30" class="ds-t ds-w" font-weight="700">#1c6fd6</text>
+      <text x="12" y="50" class="ds-t ds-w" font-size="11" opacity="0.85">--azure</text>
+      <text x="12" y="66" class="ds-t ds-w" font-size="10" opacity="0.7">accent · highlight</text>
+    </g>
+    <g transform="translate(830,118)">
+      <rect width="150" height="74" rx="10" fill="#38bdf8"/>
+      <text x="12" y="30" class="ds-t" font-size="12.5" font-weight="700" fill="#04101f">#38bdf8</text>
+      <text x="12" y="50" class="ds-t" font-size="11" fill="#04101f" opacity="0.8">--sky</text>
+      <text x="12" y="66" class="ds-t" font-size="10" fill="#04101f" opacity="0.65">hover · focus ring</text>
+    </g>
+    <g transform="translate(990,118)">
+      <rect width="220" height="74" rx="10" fill="#dbeaff"/>
+      <text x="12" y="30" class="ds-t ds-d" font-weight="700">#dbeaff</text>
+      <text x="12" y="50" class="ds-t ds-d" font-size="11" opacity="0.8">--ice</text>
+      <text x="12" y="66" class="ds-t ds-d" font-size="10" opacity="0.65">primary text on dark</text>
+    </g>
+  </g>
+
+  <rect x="30" y="206" width="1180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="46" y="234" class="ds-t ds-p">The same hex values drive the <tspan class="ds-m">Kvantum</tspan> Qt style, the <tspan class="ds-m">LXQt</tspan> panel theme, <tspan class="ds-m">Arc-Dark</tspan> for GTK, the <tspan class="ds-m">Plymouth</tspan> splash and this README — so the desktop, the boot splash and the docs share one palette.</text>
+
+  <!-- ============ 2 · depth metaphor ============ -->
+  <text x="30" y="292" class="ds-t ds-h">2 · Why “deep ocean” — a depth metaphor for a distro</text>
+
+  <rect x="30" y="308" width="230" height="230" rx="12" fill="url(#ds-depth)" stroke="#0a2e5b"/>
+  <text x="145" y="336" class="ds-t" font-size="12" font-weight="700" fill="#04101f" text-anchor="middle">surface → abyss</text>
+
+  <g class="ds-t">
+    <g>
+      <rect x="286" y="308" width="924" height="52" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+      <rect x="286" y="308" width="6" height="52" rx="3" fill="#7dd3fc"/>
+      <text x="308" y="332" class="ds-t ds-d" font-weight="700">Sunlit surface = ice text</text>
+      <text x="308" y="350" class="ds-t ds-p">light-on-dark stays legible: body text #dbeaff, never pure white (softer, less glare)</text>
+    </g>
+    <g>
+      <rect x="286" y="370" width="924" height="52" rx="10" fill="#ffffff" stroke="#1c6fd6"/>
+      <rect x="286" y="370" width="6" height="52" rx="3" fill="#1c6fd6"/>
+      <text x="308" y="394" class="ds-t ds-d" font-weight="700">Mid water = one accent</text>
+      <text x="308" y="412" class="ds-t ds-p">#1c6fd6 marks selection, focus and the active item — a single accent, used sparingly, so “what is selected” is never ambiguous</text>
+    </g>
+    <g>
+      <rect x="286" y="432" width="924" height="52" rx="10" fill="#ffffff" stroke="#0a2e5b"/>
+      <rect x="286" y="432" width="6" height="52" rx="3" fill="#0a2e5b"/>
+      <text x="308" y="456" class="ds-t ds-d" font-weight="700">Deep field = layered blues</text>
+      <text x="308" y="474" class="ds-t ds-p">four blues step #071c3d → #0a2e5b → #0f2340 for panels, bars and bases, giving depth without borders or heavy shadows</text>
+    </g>
+    <g>
+      <rect x="286" y="494" width="924" height="44" rx="10" fill="#ffffff" stroke="#04101f"/>
+      <rect x="286" y="494" width="6" height="44" rx="3" fill="#04101f"/>
+      <text x="308" y="521" class="ds-t ds-d" font-weight="700">Abyss = the page behind everything</text>
+    </g>
+  </g>
+
+  <!-- ============ 3 · type ============ -->
+  <text x="30" y="588" class="ds-t ds-h">3 · Typography &amp; motion</text>
+
+  <g>
+    <rect x="30" y="604" width="580" height="150" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="50" y="630" class="ds-t ds-d" font-weight="700">Type on the desktop</text>
+    <text x="50" y="656" class="ds-t" font-size="17" fill="#0f172a">Noto Sans — UI labels, 10–11pt</text>
+    <text x="50" y="682" class="ds-t" font-size="15" fill="#0f172a">Noto Sans — window titles, semibold</text>
+    <text x="50" y="708" class="ds-t" font-family="Consolas, monospace" font-size="13" fill="#0e7490">Noto Sans Mono / QTerminal — terminals</text>
+    <text x="50" y="736" class="ds-t ds-p">Latin + Arabic faces ship; CJK/obscure scripts are trimmed (see “Lightweight by design”).</text>
+  </g>
+
+  <g>
+    <rect x="630" y="604" width="580" height="150" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="650" y="630" class="ds-t ds-d" font-weight="700">Motion — calm, not busy</text>
+    <g>
+      <circle cx="662" cy="656" r="6" fill="#1c6fd6"/>
+      <text x="680" y="660" class="ds-t ds-p">picom fading — short, even fades on window open/close</text>
+    </g>
+    <g>
+      <circle cx="662" cy="682" r="6" fill="#38bdf8"/>
+      <text x="680" y="686" class="ds-t ds-p">inactive-opacity — unfocused windows recede, focused stays crisp</text>
+    </g>
+    <g>
+      <circle cx="662" cy="708" r="6" fill="#7fb2ff"/>
+      <text x="680" y="712" class="ds-t ds-p">Plymouth — slow pulsing droplet; progress bar, no spinner</text>
+    </g>
+    <text x="650" y="736" class="ds-t ds-p">No bouncy or elastic effects: depth and hue do the work, motion only signals state.</text>
+  </g>
+</svg>

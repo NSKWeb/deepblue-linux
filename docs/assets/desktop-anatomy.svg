@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 720" width="1240" height="720" role="img" aria-label="Annotated anatomy of the DeepBlue LXQt desktop: top panel, deep-ocean wallpaper, Kvantum Qt window, GTK window, Plank dock, icons and cursor, marked with numbered pins">
+  <defs>
+    <linearGradient id="da-hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a4a86"/><stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="da-wall" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#04101f"/>
+      <stop offset="55%" stop-color="#071c3d"/>
+      <stop offset="100%" stop-color="#0a2e5b"/>
+    </linearGradient>
+    <linearGradient id="da-wave" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c6fd6" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1c6fd6" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="da-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="da-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .da-t  { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .da-h  { font-size: 16px; font-weight: 700; fill: #0e7490; }
+      .da-p  { font-size: 12.5px; fill: #475569; }
+      .da-ui { font-size: 11px; fill: #dbeaff; }
+      .da-a  { font-size: 12px; fill: #7fb2ff; }
+      .da-pin{ font-size: 13px; font-weight: 700; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect width="1240" height="720" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1240" height="64" fill="url(#da-hdr)"/>
+  <text x="30" y="42" class="da-t" font-size="24" font-weight="700" fill="#f0f9ff">Desktop anatomy — one coherent dark, blue-accented session</text>
+  <text x="1210" y="42" class="da-t" font-size="15" fill="#bae6fd" text-anchor="end">LXQt · Qt6 + Kvantum</text>
+
+  <!-- ===================== the screen ===================== -->
+  <rect x="40" y="92" width="760" height="512" rx="14" fill="url(#da-wall)" stroke="#0a2e5b" stroke-width="2"/>
+
+  <!-- wallpaper droplet + waves -->
+  <g transform="translate(600,300)" opacity="0.9">
+    <path d="M60 0 C60 0 10 62 10 96 a50 50 0 0 0 100 0 C110 62 60 0 60 0 Z"
+          fill="none" stroke="url(#da-accent)" stroke-width="5" filter="url(#da-glow)"/>
+    <path d="M60 0 C60 0 10 62 10 96 a50 50 0 0 0 100 0 C110 62 60 0 60 0 Z"
+          fill="#38bdf8" opacity="0.10"/>
+  </g>
+  <path d="M40 520 C 220 480, 420 560, 620 520 S 740 486, 800 512 L800 604 L40 604 Z" fill="url(#da-wave)"/>
+  <path d="M40 552 C 240 520, 440 588, 640 552 S 760 528, 800 548 L800 604 L40 604 Z" fill="#1c6fd6" opacity="0.16"/>
+
+  <!-- top panel -->
+  <rect x="40" y="92" width="760" height="38" fill="#071c3d"/>
+  <rect x="40" y="92" width="760" height="38" fill="none" stroke="#1c6fd6" stroke-opacity="0.5"/>
+  <rect x="52" y="100" width="66" height="22" rx="6" fill="#0a2e5b" stroke="#1c6fd6"/>
+  <text x="85" y="115" class="da-t da-ui" text-anchor="middle" font-weight="700">MENU</text>
+  <g fill="#7fb2ff" opacity="0.85">
+    <rect x="130" y="104" width="16" height="14" rx="3"/>
+    <rect x="152" y="104" width="16" height="14" rx="3"/>
+    <rect x="174" y="104" width="16" height="14" rx="3"/>
+  </g>
+  <g>
+    <rect x="212" y="101" width="86" height="20" rx="6" fill="#0f2340" stroke="#1c6fd6"/>
+    <text x="255" y="115" class="da-t da-ui" text-anchor="middle">QTerminal</text>
+    <rect x="304" y="101" width="70" height="20" rx="6" fill="#0f2340" stroke="#1c6fd6" stroke-opacity="0.5"/>
+    <text x="339" y="115" class="da-t da-ui" text-anchor="middle" fill="#8fa9cf">Files</text>
+  </g>
+  <g fill="#7fb2ff">
+    <circle cx="660" cy="111" r="6"/>
+    <circle cx="680" cy="111" r="6"/>
+    <circle cx="700" cy="111" r="6" fill="#5fd98a"/>
+  </g>
+  <text x="782" y="115" class="da-t da-ui" text-anchor="end">14:32  ·  🔊  ⚡</text>
+
+  <!-- Kvantum (Qt) window -->
+  <rect x="96" y="172" width="404" height="248" rx="10" fill="#02080f" opacity="0.5"/>
+  <rect x="90" y="166" width="404" height="248" rx="10" fill="#0f2340" stroke="#1c6fd6" stroke-width="1.5"/>
+  <rect x="90" y="166" width="404" height="34" rx="10" fill="#0a2e5b"/>
+  <rect x="90" y="188" width="404" height="12" fill="#0a2e5b"/>
+  <text x="108" y="188" class="da-t da-ui" font-weight="700">DeepBlue Files — Home</text>
+  <g>
+    <circle cx="452" cy="183" r="5" fill="#ff5f57"/>
+    <circle cx="470" cy="183" r="5" fill="#febc2e"/>
+    <circle cx="488" cy="183" r="5" fill="#28c840"/>
+  </g>
+  <rect x="90" y="200" width="118" height="214" fill="#0b2344"/>
+  <g class="da-t da-a">
+    <text x="104" y="224">▸ Places</text>
+    <text x="104" y="246" fill="#7fb2ff">  Home</text>
+    <text x="104" y="268">  Documents</text>
+    <text x="104" y="290">  Downloads</text>
+    <text x="104" y="318">▸ Devices</text>
+    <text x="104" y="340">  DeepBlue SSD</text>
+    <text x="104" y="362">  USB Stick</text>
+  </g>
+  <g>
+    <rect x="220" y="214" width="256" height="24" rx="5" fill="#1c6fd6" opacity="0.9"/>
+    <text x="230" y="230" class="da-t da-ui" font-weight="700">📁  os-release</text>
+    <text x="230" y="256" class="da-t da-ui">📄  notes.txt</text>
+    <text x="230" y="282" class="da-t da-ui">📁  Screenshots</text>
+    <text x="230" y="308" class="da-t da-ui">📄  README.md</text>
+    <text x="230" y="334" class="da-t da-ui">🎵  track.ogg</text>
+    <text x="230" y="360" class="da-t da-ui">📦  deepblue-base.deb</text>
+  </g>
+  <g stroke="#1c6fd6" stroke-opacity="0.3">
+    <line x1="220" y1="242" x2="476" y2="242"/>
+    <line x1="220" y1="268" x2="476" y2="268"/>
+    <line x1="220" y1="294" x2="476" y2="294"/>
+    <line x1="220" y1="320" x2="476" y2="320"/>
+    <line x1="220" y1="346" x2="476" y2="346"/>
+  </g>
+
+  <!-- GTK window (Arc-Dark) -->
+  <rect x="470" y="360" width="286" height="150" rx="9" fill="#02080f" opacity="0.5"/>
+  <rect x="464" y="354" width="286" height="150" rx="9" fill="#1b2b3f" stroke="#4b6a8f" stroke-width="1.5"/>
+  <rect x="464" y="354" width="286" height="30" rx="9" fill="#22334a"/>
+  <rect x="464" y="374" width="286" height="10" fill="#22334a"/>
+  <text x="480" y="374" class="da-t da-ui" font-weight="700">Text Editor</text>
+  <circle cx="726" cy="369" r="5" fill="#ff5f57"/>
+  <circle cx="744" cy="369" r="5" fill="#febc2e"/>
+  <g class="da-t da-ui" opacity="0.85">
+    <text x="480" y="404">PRETTY_NAME="DeepBlue Linux 1.0"</text>
+    <text x="480" y="424">NAME="DeepBlue Linux"</text>
+    <text x="480" y="444">VERSION="1.0 (Cobalt)"</text>
+    <text x="480" y="464">ID=deepblue</text>
+    <text x="480" y="484">HOME_URL="https://deepblue.example"</text>
+  </g>
+
+  <!-- Plank dock -->
+  <rect x="236" y="544" width="368" height="52" rx="26" fill="#04101f" opacity="0.72" stroke="#1c6fd6" stroke-opacity="0.6"/>
+  <g>
+    <rect x="262" y="556" width="28" height="28" rx="7" fill="#1c6fd6"/>
+    <rect x="322" y="556" width="28" height="28" rx="7" fill="#0a2e5b" stroke="#7fb2ff"/>
+    <rect x="382" y="556" width="28" height="28" rx="7" fill="#0a2e5b" stroke="#7fb2ff"/>
+    <rect x="442" y="556" width="28" height="28" rx="7" fill="#0a2e5b" stroke="#7fb2ff"/>
+    <rect x="502" y="556" width="28" height="28" rx="7" fill="#0a2e5b" stroke="#7fb2ff"/>
+    <rect x="562" y="556" width="28" height="28" rx="7" fill="#0a2e5b" stroke="#7fb2ff"/>
+  </g>
+
+  <!-- ===================== numbered pins ===================== -->
+  <g>
+    <g transform="translate(722,102)"><circle r="13" fill="#0891b2" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">1</text></g>
+    <g transform="translate(600,452)"><circle r="13" fill="#0891b2" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">2</text></g>
+    <g transform="translate(474,196)"><circle r="13" fill="#1c6fd6" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">3</text></g>
+    <g transform="translate(730,386)"><circle r="13" fill="#1c6fd6" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">4</text></g>
+    <g transform="translate(420,570)"><circle r="13" fill="#0891b2" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">5</text></g>
+    <g transform="translate(240,238)"><circle r="13" fill="#0891b2" stroke="#ffffff" stroke-width="2"/><text class="da-t da-pin" text-anchor="middle" y="5">6</text></g>
+  </g>
+
+  <!-- ===================== legend ===================== -->
+  <g>
+    <rect x="830" y="96" width="380" height="76" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <g transform="translate(852,124)"><circle r="12" fill="#0891b2"/><text class="da-t da-pin" text-anchor="middle" y="5">1</text></g>
+    <text x="874" y="120" class="da-t da-h">Top panel (LXQt)</text>
+    <text x="874" y="140" class="da-t da-p">main menu · quick-launch · taskbar · tray · clock</text>
+    <text x="874" y="158" class="da-t da-p">background rgba(7,22,43,72%) with blue accents</text>
+  </g>
+  <g>
+    <rect x="830" y="180" width="380" height="76" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <g transform="translate(852,208)"><circle r="12" fill="#0891b2"/><text class="da-t da-pin" text-anchor="middle" y="5">2</text></g>
+    <text x="874" y="204" class="da-t da-h">Wallpaper</text>
+    <text x="874" y="224" class="da-t da-p">deep-ocean gradient + droplet mark</text>
+    <text x="874" y="242" class="da-t da-p">same art as the Plymouth boot splash</text>
+  </g>
+  <g>
+    <rect x="830" y="264" width="380" height="76" rx="10" fill="#ffffff" stroke="#1c6fd6" stroke-width="1.5"/>
+    <g transform="translate(852,292)"><circle r="12" fill="#1c6fd6"/><text class="da-t da-pin" text-anchor="middle" y="5">3</text></g>
+    <text x="874" y="288" class="da-t da-h">Kvantum window (Qt)</text>
+    <text x="874" y="308" class="da-t da-p">base #0f2340 · highlight #1c6fd6</text>
+    <text x="874" y="326" class="da-t da-p">Qt6 apps styled via qt6ct</text>
+  </g>
+  <g>
+    <rect x="830" y="348" width="380" height="76" rx="10" fill="#ffffff" stroke="#1c6fd6" stroke-width="1.5"/>
+    <g transform="translate(852,376)"><circle r="12" fill="#1c6fd6"/><text class="da-t da-pin" text-anchor="middle" y="5">4</text></g>
+    <text x="874" y="372" class="da-t da-h">GTK window (Arc-Dark)</text>
+    <text x="874" y="392" class="da-t da-p">GTK apps match the Qt theme</text>
+    <text x="874" y="410" class="da-t da-p">gtk-application-prefer-dark-theme=true</text>
+  </g>
+  <g>
+    <rect x="830" y="432" width="380" height="76" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <g transform="translate(852,460)"><circle r="12" fill="#0891b2"/><text class="da-t da-pin" text-anchor="middle" y="5">5</text></g>
+    <text x="874" y="456" class="da-t da-h">Plank dock</text>
+    <text x="874" y="476" class="da-t da-p">translucent, bottom-centred</text>
+    <text x="874" y="494" class="da-t da-p">Files · Firefox · QTerminal · Mousepad</text>
+  </g>
+  <g>
+    <rect x="830" y="516" width="380" height="76" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <g transform="translate(852,544)"><circle r="12" fill="#0891b2"/><text class="da-t da-pin" text-anchor="middle" y="5">6</text></g>
+    <text x="874" y="540" class="da-t da-h">Icons &amp; cursor</text>
+    <text x="874" y="560" class="da-t da-p">Papirus-Dark icons</text>
+    <text x="874" y="578" class="da-t da-p">Bibata-Modern-Ice cursor</text>
+  </g>
+
+  <text x="30" y="646" class="da-t" font-size="14" fill="#0f172a" font-weight="700">One hook, one look —</text>
+  <text x="212" y="646" class="da-t da-p">every layer above is written by <tspan font-family="Consolas, monospace" fill="#0e7490">0100-deepblue-branding.hook.chroot</tspan> and seeded into both /home/deepblue and /etc/skel.</text>
+  <text x="30" y="676" class="da-t da-p">Qt widgets get the Kvantum style; GTK widgets get Arc-Dark; the panel and dock are LXQt/Plank — so Qt and GTK apps read as one desktop.</text>
+  <text x="30" y="702" class="da-t" font-size="12" fill="#64748b">Rendered from the shipped theme files — the interactive walk-through lives at docs/preview.html.</text>
+</svg>

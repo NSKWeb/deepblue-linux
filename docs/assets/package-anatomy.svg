@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 780" width="1240" height="780" role="img" aria-label="Anatomy of a DeepBlue .deb (ar archive with control and data members) and the signing trust chain from source package to a trusted apt install">
+  <defs>
+    <linearGradient id="pa-hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a4a86"/><stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <marker id="pa-a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+    <marker id="pa-g" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+    <style>
+      .pa-t { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .pa-h { font-size: 15px; font-weight: 700; fill: #0e7490; }
+      .pa-p { font-size: 12px; fill: #475569; }
+      .pa-d { font-size: 12.5px; fill: #0f172a; }
+      .pa-m { font-family: Consolas, "Courier New", monospace; font-size: 11.5px; fill: #0e7490; }
+      .pa-mg{ font-family: Consolas, "Courier New", monospace; font-size: 11.5px; fill: #15803d; }
+      .pa-w { font-size: 12px; fill: #e0f2fe; }
+    </style>
+  </defs>
+
+  <rect width="1240" height="780" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1240" height="64" fill="url(#pa-hdr)"/>
+  <text x="30" y="42" class="pa-t" font-size="24" font-weight="700" fill="#f0f9ff">Anatomy of a package &amp; the signing trust chain</text>
+  <text x="1210" y="42" class="pa-t" font-size="15" fill="#bae6fd" text-anchor="end">deepblue-base</text>
+
+  <!-- ================= LEFT: .deb anatomy ================= -->
+  <text x="30" y="100" class="pa-t pa-h">1 · Inside <tspan class="pa-m">deepblue-base_1.0.0_all.deb</tspan> — an <tspan class="pa-m">ar</tspan> archive</text>
+
+  <rect x="30" y="116" width="580" height="360" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="50" y="142" class="pa-t pa-d" font-weight="700">ar container — three members, in order</text>
+
+  <!-- member 1 -->
+  <g>
+    <rect x="50" y="156" width="540" height="52" rx="9" fill="#0b2f52" stroke="#1e6ea8"/>
+    <text x="68" y="180" class="pa-t pa-w" font-weight="700">debian-binary</text>
+    <text x="68" y="198" class="pa-t pa-w" font-size="11" opacity="0.85">the literal string “2.0\n” — the format version</text>
+  </g>
+  <!-- member 2 -->
+  <g>
+    <rect x="50" y="220" width="540" height="128" rx="9" fill="#ecfeff" stroke="#7dd3fc"/>
+    <text x="68" y="244" class="pa-t pa-d" font-weight="700">control.tar.xz — metadata &amp; maintainer scripts</text>
+    <text x="68" y="266" class="pa-t pa-m">control   ← name, version, arch, Depends, Description</text>
+    <text x="68" y="286" class="pa-t pa-m">preinst   ← drops debootstrap’s diversion, adds ours</text>
+    <text x="68" y="306" class="pa-t pa-m">postinst · prerm · postrm</text>
+    <text x="68" y="326" class="pa-t pa-m">md5sums   ← integrity of every shipped file</text>
+    <text x="68" y="344" class="pa-t pa-p">This is the part that makes the branding survive upgrades.</text>
+  </g>
+  <!-- member 3 -->
+  <g>
+    <rect x="50" y="360" width="540" height="104" rx="9" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="68" y="384" class="pa-t pa-d" font-weight="700">data.tar.xz — the files that land on disk</text>
+    <text x="68" y="406" class="pa-t pa-mg">etc/os-release   → PRETTY_NAME="DeepBlue Linux 1.0"</text>
+    <text x="68" y="426" class="pa-t pa-mg">etc/lsb-release · etc/issue · etc/issue.net</text>
+    <text x="68" y="446" class="pa-t pa-mg">etc/deepblue/release   ← machine-readable identity</text>
+  </g>
+
+  <text x="30" y="500" class="pa-t pa-p">Install order is fixed: dpkg unpacks <tspan class="pa-m">data</tspan> after <tspan class="pa-m">preinst</tspan> runs — which is exactly why the diversion must be set up first.</text>
+
+  <!-- ================= RIGHT: trust chain ================= -->
+  <text x="640" y="100" class="pa-t pa-h">2 · The trust chain — who may publish packages you install</text>
+
+  <g>
+    <rect x="640" y="116" width="570" height="60" rx="11" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <rect x="640" y="116" width="6" height="60" rx="3" fill="#0891b2"/>
+    <text x="660" y="142" class="pa-t pa-d" font-weight="700">Source package — <tspan class="pa-m">pkg/deepblue-base</tspan></text>
+    <text x="660" y="162" class="pa-t pa-p">DEBIAN/ control + preinst + prerm, and the payload files</text>
+  </g>
+  <path d="M925 176 V196" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#pa-a)"/>
+  <g>
+    <rect x="640" y="198" width="570" height="60" rx="11" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <rect x="640" y="198" width="6" height="60" rx="3" fill="#0891b2"/>
+    <text x="660" y="224" class="pa-t pa-d" font-weight="700">Build — <tspan class="pa-m">dpkg-deb --build</tspan></text>
+    <text x="660" y="244" class="pa-t pa-p">produces the .deb; run by <tspan class="pa-m">tools/build-repo.sh</tspan></text>
+  </g>
+  <path d="M925 258 V278" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#pa-a)"/>
+  <g>
+    <rect x="640" y="280" width="570" height="60" rx="11" fill="#ffffff" stroke="#0891b2" stroke-width="1.5"/>
+    <rect x="640" y="280" width="6" height="60" rx="3" fill="#0891b2"/>
+    <text x="660" y="306" class="pa-t pa-d" font-weight="700">Publish — <tspan class="pa-m">reprepro include cobalt</tspan></text>
+    <text x="660" y="326" class="pa-t pa-p">adds the .deb to <tspan class="pa-m">pool/</tspan> and regenerates the indices</text>
+  </g>
+  <path d="M925 340 V360" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#pa-a)"/>
+  <g>
+    <rect x="640" y="362" width="570" height="82" rx="11" fill="#0b2f52" stroke="#1e6ea8" stroke-width="2"/>
+    <text x="660" y="388" class="pa-t pa-w" font-weight="700">Sign — <tspan font-family="Consolas, monospace" fill="#7dd3fc">Release</tspan> → <tspan font-family="Consolas, monospace" fill="#7dd3fc">InRelease</tspan></text>
+    <text x="660" y="410" class="pa-t pa-w" font-size="11.5" opacity="0.9">the indices are signed with the DeepBlue private key</text>
+    <text x="660" y="430" class="pa-t pa-w" font-size="11.5" opacity="0.9">🔑 repo/gnupg — gitignored, never shipped, never shared</text>
+  </g>
+  <path d="M925 444 V464" stroke="#22c55e" stroke-width="3" fill="none" marker-end="url(#pa-g)"/>
+  <g>
+    <rect x="640" y="466" width="570" height="60" rx="11" fill="#ffffff" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="640" y="466" width="6" height="60" rx="3" fill="#22c55e"/>
+    <text x="660" y="492" class="pa-t pa-d" font-weight="700">Ship — keyring on the ISO</text>
+    <text x="660" y="512" class="pa-t pa-p">only the <tspan class="pa-mg">public</tspan> key goes into <tspan class="pa-mg">/usr/share/keyrings/</tspan></text>
+  </g>
+  <path d="M925 526 V546" stroke="#22c55e" stroke-width="3" fill="none" marker-end="url(#pa-g)"/>
+  <g>
+    <rect x="640" y="548" width="570" height="82" rx="11" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+    <text x="660" y="574" class="pa-t pa-d" font-weight="700">Verify — <tspan class="pa-mg">apt update</tspan> on the installed system</text>
+    <text x="660" y="596" class="pa-t pa-p">apt checks the <tspan class="pa-mg">InRelease</tspan> signature against the shipped keyring</text>
+    <text x="660" y="616" class="pa-t pa-p">signature valid → the package is trusted; tampered → apt refuses it</text>
+  </g>
+
+  <!-- footer -->
+  <rect x="640" y="644" width="570" height="70" rx="12" fill="#ffffff" stroke="#0a2e5b" stroke-width="1.5"/>
+  <text x="660" y="670" class="pa-t pa-d" font-weight="700">The consequence</text>
+  <text x="660" y="692" class="pa-t pa-p">Only the holder of the private key can publish packages your systems will trust —</text>
+  <text x="660" y="710" class="pa-t pa-p">which is the whole point of running your own signed archive.</text>
+
+  <text x="30" y="700" class="pa-t" font-size="14" fill="#0f172a" font-weight="700">Identity is code, not files.</text>
+  <text x="30" y="724" class="pa-t pa-p">Branding lives in a real Debian package with maintainer scripts and a diversion —</text>
+  <text x="30" y="744" class="pa-t pa-p">so a Debian upgrade can never silently overwrite it (see the diversion diagram).</text>
+</svg>
