@@ -1,0 +1,12 @@
+// DeepBlue Linux: install security updates automatically.
+//
+// Only the Debian "security" origin is enabled, so the machine receives
+// vulnerability fixes without pulling in unrelated version changes from the
+// stable pockets. Reboots are not forced; kernel/glibc updates wait for a
+// reboot you choose. unattended-upgrades.service is enabled by
+// deepblue-security.postinst.
+
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";

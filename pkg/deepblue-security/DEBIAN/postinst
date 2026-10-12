@@ -1,0 +1,40 @@
+#!/bin/sh
+# Turn on the DeepBlue security defaults. Every step is best-effort: on a
+# chroot build (where systemd is not running) the enable calls are recorded
+# for the first real boot, and a failure to start a service now must not fail
+# the whole install.
+set -e
+
+# --- Firewall -------------------------------------------------------------
+# nftables' own /etc/nftables.conf is diverted in preinst; ours is now in
+# place. Validate it before we rely on it: a syntax error here would lock the
+# machine out of its own network on the next boot.
+if command -v nft >/dev/null 2>&1 && [ -r /etc/nftables.conf ]; then
+    if nft -c -f /etc/nftables.conf >/dev/null 2>&1; then
+        systemctl enable nftables.service >/dev/null 2>&1 || true
+        systemctl restart nftables.service >/dev/null 2>&1 || true
+    else
+        echo "deepblue-security: /etc/nftables.conf failed syntax check; firewall not started" >&2
+    fi
+fi
+
+# --- Automatic security updates -------------------------------------------
+systemctl enable unattended-upgrades.service >/dev/null 2>&1 || true
+if [ -x /usr/bin/dpkg-reconfigure ]; then
+    # Wire debconf to the file config above without prompting.
+    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure -plow unattended-upgrades >/dev/null 2>&1 || true
+fi
+
+# --- AppArmor -------------------------------------------------------------
+# apparmor ships a service; enable it so profiles are enforced from boot.
+systemctl enable apparmor.service >/dev/null 2>&1 || true
+systemctl start apparmor.service >/dev/null 2>&1 || true
+
+# --- sysctl ---------------------------------------------------------------
+# systemd-sysctl reads /etc/sysctl.d at boot. Apply now too, so a running
+# system gets the hardening without a reboot.
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl restart systemd-sysctl.service >/dev/null 2>&1 || true
+fi
+
+exit 0

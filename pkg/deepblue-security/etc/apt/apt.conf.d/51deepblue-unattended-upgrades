@@ -1,0 +1,18 @@
+// DeepBlue Linux: which origins unattended-upgrades may act on.
+//
+// The default Debian config lists only "${distro_id}:${distro_codename}-security"
+// for the current release. DeepBlue keeps that but states it explicitly so the
+// policy is visible in one file. Everything else — backports, proposed-updates,
+// third-party archives — is deliberately excluded.
+
+Unattended-Upgrade::Allowed-Origins {
+	"${distro_id}:${distro_codename}-security";
+	"${distro_id}ESMApps:${distro_codename}-apps-security";
+	"${distro_id}ESM:${distro_codename}-infra-security";
+};
+
+// Never reboot the machine out from under the user.
+Unattended-Upgrade::Automatic-Reboot "false";
+
+// If a reboot is required, say so in a motd-style note rather than acting.
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
