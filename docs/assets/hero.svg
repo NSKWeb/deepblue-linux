@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="DeepBlue Linux banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#04101f"/>
+      <stop offset="55%" stop-color="#062a4d"/>
+      <stop offset="100%" stop-color="#0a4a86"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="340" rx="18" fill="url(#bg)"/>
+
+  <!-- water waves -->
+  <path d="M0 250 C 200 210, 400 290, 600 250 S 1000 210, 1200 250 L1200 340 L0 340 Z" fill="url(#wave)"/>
+  <path d="M0 285 C 220 250, 430 320, 640 285 S 1010 250, 1200 285 L1200 340 L0 340 Z" fill="#0ea5e9" opacity="0.18"/>
+
+  <!-- subtle grid -->
+  <g stroke="#38bdf8" stroke-opacity="0.08">
+    <path d="M0 60 H1200 M0 120 H1200 M0 180 H1200 M200 0 V340 M400 0 V340 M600 0 V340 M800 0 V340 M1000 0 V340"/>
+  </g>
+
+  <!-- logo: droplet with chip -->
+  <g transform="translate(90,70)">
+    <path d="M60 0 C60 0 10 62 10 96 a50 50 0 0 0 100 0 C110 62 60 0 60 0 Z"
+          fill="none" stroke="url(#accent)" stroke-width="6" filter="url(#glow)"/>
+    <path d="M60 0 C60 0 10 62 10 96 a50 50 0 0 0 100 0 C110 62 60 0 60 0 Z"
+          fill="#38bdf8" opacity="0.12"/>
+    <g fill="#e0f2fe">
+      <rect x="42" y="86" width="36" height="26" rx="4" fill="none" stroke="#7dd3fc" stroke-width="3"/>
+      <path d="M42 95 H30 M42 103 H30 M78 95 H90 M78 103 H90 M54 86 V74 M66 86 V74 M54 112 V124 M66 112 V124"
+            stroke="#7dd3fc" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- wordmark -->
+  <text x="250" y="150" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#f0f9ff">
+    Deep<tspan fill="url(#accent)">Blue</tspan> <tspan font-weight="300" fill="#bae6fd">Linux</tspan>
+  </text>
+  <text x="253" y="192" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="24" fill="#7dd3fc" letter-spacing="3">
+    DEBIAN-BASED · LXQT DESKTOP · YOUR OWN SIGNED ARCHIVE
+  </text>
+
+  <!-- badges row -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17">
+    <g>
+      <rect x="253" y="216" width="150" height="34" rx="17" fill="#0b2f52" stroke="#1e6ea8"/>
+      <text x="328" y="238" fill="#bae6fd" text-anchor="middle">Release 1.0 Cobalt</text>
+    </g>
+    <g>
+      <rect x="417" y="216" width="128" height="34" rx="17" fill="#0b2f52" stroke="#1e6ea8"/>
+      <text x="481" y="238" fill="#bae6fd" text-anchor="middle">amd64 · hybrid</text>
+    </g>
+    <g>
+      <rect x="559" y="216" width="168" height="34" rx="17" fill="#0b2f52" stroke="#1e6ea8"/>
+      <text x="643" y="238" fill="#bae6fd" text-anchor="middle">BIOS + UEFI boot</text>
+    </g>
+    <g>
+      <rect x="741" y="216" width="188" height="34" rx="17" fill="#0b2f52" stroke="#1e6ea8"/>
+      <text x="835" y="238" fill="#bae6fd" text-anchor="middle">Signed APT archive</text>
+    </g>
+  </g>
+</svg>

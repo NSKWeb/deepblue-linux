@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="Ownership layers of DeepBlue Linux">
+  <defs>
+    <linearGradient id="hdr2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#065f46"/><stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="you" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dcfce7"/><stop offset="100%" stop-color="#bbf7d0"/>
+    </linearGradient>
+    <linearGradient id="shared" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e0f2fe"/><stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="theirs" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <style>
+      .t  { font-family: Segoe UI, Helvetica, Arial, sans-serif; }
+      .ttl{ font-size: 24px; font-weight: 700; fill:#f0f9ff; }
+      .h  { font-size: 20px; font-weight: 700; fill:#0f172a; }
+      .d  { font-size: 15px; fill:#334155; }
+      .tag{ font-size: 14px; font-weight: 700; }
+      .cap{ font-size: 14px; fill:#64748b; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <rect x="0" y="0" width="1200" height="70" fill="url(#hdr2)"/>
+  <text x="30" y="45" class="t ttl">Ownership layers — what is truly yours</text>
+  <text x="1170" y="45" class="t" font-size="15" fill="#ccfbf1" text-anchor="end">practical vs legal</text>
+
+  <!-- ===== Yours ===== -->
+  <rect x="30" y="96" width="1140" height="188" rx="16" fill="url(#you)" stroke="#22c55e" stroke-width="2.5"/>
+  <rect x="30" y="96" width="8" height="188" rx="4" fill="#16a34a"/>
+  <text x="62" y="130" class="t h">✅  Yours — you own and control this</text>
+  <g class="t">
+    <rect x="62" y="146" width="250" height="52" rx="10" fill="#ffffff" stroke="#86efac"/>
+    <text x="78" y="170" class="t tag" fill="#15803d">Identity</text>
+    <text x="78" y="189" class="t cap">os-release · lsb-release · banners</text>
+
+    <rect x="326" y="146" width="250" height="52" rx="10" fill="#ffffff" stroke="#86efac"/>
+    <text x="342" y="170" class="t tag" fill="#15803d">Packages</text>
+    <text x="342" y="189" class="t cap">deepblue-base · keyring (yours)</text>
+
+    <rect x="590" y="146" width="250" height="52" rx="10" fill="#ffffff" stroke="#86efac"/>
+    <text x="606" y="170" class="t tag" fill="#15803d">Repository</text>
+    <text x="606" y="189" class="t cap">signed archive, private key</text>
+
+    <rect x="854" y="146" width="286" height="52" rx="10" fill="#ffffff" stroke="#86efac"/>
+    <text x="870" y="170" class="t tag" fill="#15803d">Release &amp; branding</text>
+    <text x="870" y="189" class="t cap">versioning “1.0 Cobalt” · look</text>
+
+    <text x="62" y="230" class="t d">You decide what ships, when it ships, what it is called and who can publish.</text>
+    <text x="62" y="256" class="t cap">This is the level of control Ubuntu, Linux Mint, Kali and Deepin exercise over their own distributions.</text>
+  </g>
+
+  <!-- ===== Shared / used under licence ===== -->
+  <rect x="30" y="302" width="1140" height="188" rx="16" fill="url(#shared)" stroke="#0ea5e9" stroke-width="2.5"/>
+  <rect x="30" y="302" width="8" height="188" rx="4" fill="#0284c7"/>
+  <text x="62" y="336" class="t h">🧩  Used under licence — Free Software by its authors</text>
+  <g class="t">
+    <rect x="62" y="352" width="250" height="52" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+    <text x="78" y="376" class="t tag" fill="#0369a1">Debian base</text>
+    <text x="78" y="395" class="t cap">GPL · tools, dpkg, apt</text>
+
+    <rect x="326" y="352" width="250" height="52" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+    <text x="342" y="376" class="t tag" fill="#0369a1">LXQt / Qt</text>
+    <text x="342" y="395" class="t cap">LGPL · desktop session</text>
+
+    <rect x="590" y="352" width="250" height="52" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+    <text x="606" y="376" class="t tag" fill="#0369a1">Linux kernel</text>
+    <text x="606" y="395" class="t cap">GPL · drivers, scheduler</text>
+
+    <rect x="854" y="352" width="286" height="52" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+    <text x="870" y="376" class="t tag" fill="#0369a1">Thousands more</text>
+    <text x="870" y="395" class="t cap">MIT · BSD · Apache · …</text>
+
+    <text x="62" y="436" class="t d">You may use, modify and redistribute all of it — but not claim authorship or exclusive ownership.</text>
+    <text x="62" y="462" class="t cap">This is not a limitation of DeepBlue; it is how every Linux distribution is built.</text>
+  </g>
+
+  <!-- ===== Not yours ===== -->
+  <rect x="30" y="508" width="1140" height="182" rx="16" fill="url(#theirs)" stroke="#94a3b8" stroke-width="2.5"/>
+  <rect x="30" y="508" width="8" height="182" rx="4" fill="#64748b"/>
+  <text x="62" y="542" class="t h">🚫  Not yours — third-party names and marks</text>
+  <g class="t">
+    <rect x="62" y="558" width="520" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="78" y="582" class="t tag" fill="#475569">“Deepin”, “DDE”, Deepin logos</text>
+    <text x="78" y="601" class="t cap">DeepBlue is inspired by Deepin; it ships none of Deepin’s trademarked material</text>
+
+    <rect x="600" y="558" width="540" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="616" y="582" class="t tag" fill="#475569">The name “DeepBlue” itself</text>
+    <text x="616" y="601" class="t cap">check for trademark collision in your jurisdiction before publishing widely</text>
+
+    <text x="62" y="642" class="t d">Also placeholders to replace: example.org URLs and the signing key identity.</text>
+    <text x="62" y="668" class="t cap">Honest ownership = full control of what you built, credit where credit is due.</text>
+  </g>
+</svg>
