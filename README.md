@@ -5,7 +5,7 @@
 **A Deepin-inspired, Debian-based Linux distribution you actually own â€” its own identity packages, its own signed APT archive, its own release.**
 
 [![Release](https://img.shields.io/badge/release-1.0%20%22Cobalt%22-0891b2?style=for-the-badge)](#-release)
-[![Download ISO](https://img.shields.io/badge/download-ISO%20%C2%B7%202%20GB-16a34a?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/NSKWeb/deepblue-linux/releases/latest)
+[![Download ISO](https://img.shields.io/badge/download-ISO%20%C2%B7%201.86%20GB-16a34a?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/NSKWeb/deepblue-linux/releases/latest)
 [![Base](https://img.shields.io/badge/base-Debian%20trixie-A80030?style=for-the-badge&logo=debian&logoColor=white)](#-what-you-get)
 [![Desktop](https://img.shields.io/badge/desktop-LXQt%20%2F%20Qt-0ea5e9?style=for-the-badge)](#-what-you-get)
 [![Arch](https://img.shields.io/badge/arch-amd64-334155?style=for-the-badge)](#-release)
@@ -21,7 +21,7 @@
 
 Download the latest image from the **[Releases page](https://github.com/NSKWeb/deepblue-linux/releases/latest)**:
 
-**`DeepBlue-Linux-1.0-amd64.iso`** â€” ~1.86 GB (live + installer)
+**`DeepBlue-Linux-1.0-amd64.iso`** — ~1.86 GB (`1,997,537,280` bytes; live + installer)
 
 Or from the command line:
 
@@ -37,7 +37,7 @@ sha256sum -c DeepBlue-Linux-1.0-amd64.iso.sha256
 # expected: DeepBlue-Linux-1.0-amd64.iso: OK
 ```
 
-The expected hash is `4517ddfa9be0220f415483d0eda9c1db609f89ae4e7c567345c273d1d28abb3b`.
+The expected hash is `771fbb0209c5f0a77f654aef524be1d69b5119ea9332afd4a09e5b514aa7a7bf`.
 
 ### 3. Flash it to a USB stick
 
@@ -302,6 +302,7 @@ Everything below was exercised on the built image (evidence in [`docs/`](docs/))
 - [x] `apt-get update` validates the archiveâ€™s `InRelease` with the shipped keyring â€” no prompts, no errors
 - [x] `apt-cache policy deepblue-base` â†’ candidate from **`DeepBlue Linux:cobalt`**
 - [x] `base-files` reinstall leaves the DeepBlue identity intact; purge restores Debianâ€™s
+- [x] **Size-trimmed ISO still boots** — APT caches, CJK/legacy fonts, `Papirus-Light` and unused cursor variants removed, yet the live session reaches the same `deepblue login:` banner (evidence: [`docs/boot-trim-evidence.log`](docs/boot-trim-evidence.log))
 
 ---
 
@@ -354,7 +355,8 @@ repo/                                     # signed APT archive (reprepro)
 tools/build-repo.sh                       # build + publish + sign packages
 build.sh                                  # configure + build the ISO
 setup-host.sh                             # install toolchain + container workaround
-docs/                                     # evidence, ownership notes, SVG assets
+docs/                                     # evidence, ownership notes, SVG assets,
+                                          # preview.html (browsable desktop preview)
 ```
 
 ---
@@ -395,6 +397,8 @@ The live user password is `live`. Evidence logs live in [`docs/`](docs/).
 
 - [ ] Host the signed archive over HTTPS and point the source at it
 - [x] Deepin-style theming pass (Kvantum Qt style, Papirus-Dark icons, top panel + Plank dock, slick-greeter, Plymouth splash)
+- [x] Interactive desktop preview page ([`docs/preview.html`](docs/preview.html))
+- [x] Keep the ISO under GitHub's 2 GB release limit (~1.86 GB) with a documented trim pass
 - [ ] Custom installer branding
 - [ ] A `deepblue-meta` metapackage to pull in the default desktop set
 
