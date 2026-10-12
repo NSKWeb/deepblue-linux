@@ -38,6 +38,7 @@ lb config \
   --iso-volume "DEEPBLUE" \
   --bootappend-live "boot=live components hostname=deepblue username=deepblue locales=en_US.UTF-8 keyboard-layouts=us" \
   --memtest none \
+  --loadlin false \
   --apt-indices false \
   --apt-recommends false
 
