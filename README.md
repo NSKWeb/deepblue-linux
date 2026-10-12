@@ -5,12 +5,98 @@
 **A Deepin-inspired, Debian-based Linux distribution you actually own — its own identity packages, its own signed APT archive, its own release.**
 
 [![Release](https://img.shields.io/badge/release-1.0%20%22Cobalt%22-0891b2?style=for-the-badge)](#-release)
+[![Download ISO](https://img.shields.io/badge/download-ISO%20%C2%B7%202%20GB-16a34a?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/NSKWeb/deepblue-linux/releases/latest)
 [![Base](https://img.shields.io/badge/base-Debian%20trixie-A80030?style=for-the-badge&logo=debian&logoColor=white)](#-what-you-get)
 [![Desktop](https://img.shields.io/badge/desktop-LXQt%20%2F%20Qt-0ea5e9?style=for-the-badge)](#-what-you-get)
 [![Arch](https://img.shields.io/badge/arch-amd64-334155?style=for-the-badge)](#-release)
 [![Boot](https://img.shields.io/badge/boot-BIOS%20%2B%20UEFI-16a34a?style=for-the-badge)](#-release)
 
 </div>
+
+---
+
+## 📥 Download &amp; run
+
+### 1. Get the ISO
+
+Download the latest image from the **[Releases page](https://github.com/NSKWeb/deepblue-linux/releases/latest)**:
+
+**`DeepBlue-Linux-1.0-amd64.iso`** — ~2.0 GB (live + installer)
+
+Or from the command line:
+
+```sh
+curl -L -O https://github.com/NSKWeb/deepblue-linux/releases/download/v1.0/DeepBlue-Linux-1.0-amd64.iso
+curl -L -O https://github.com/NSKWeb/deepblue-linux/releases/download/v1.0/DeepBlue-Linux-1.0-amd64.iso.sha256
+```
+
+### 2. Verify the download (recommended)
+
+```sh
+sha256sum -c DeepBlue-Linux-1.0-amd64.iso.sha256
+# expected: DeepBlue-Linux-1.0-amd64.iso: OK
+```
+
+The expected hash is `4517ddfa9be0220f415483d0eda9c1db609f89ae4e7c567345c273d1d28abb3b`.
+
+### 3. Flash it to a USB stick
+
+Use a stick of **4 GB or larger** — everything on it will be erased.
+
+<table>
+<tr><th align="left">OS</th><th align="left">Command</th></tr>
+<tr><td><b>Linux / macOS</b></td><td>
+
+```sh
+sudo dd if=DeepBlue-Linux-1.0-amd64.iso of=/dev/sdX bs=4M status=progress oflag=sync
+```
+
+(Replace `/dev/sdX` with your USB device — check with `lsblk`. On macOS use `/dev/rdiskN`.)
+
+</td></tr>
+<tr><td><b>Windows</b></td><td>Use <a href="https://rufus.ie">Rufus</a> or <a href="https://etcher.balena.io">balenaEtcher</a>: select the ISO, select the USB stick, press Start. Choose “DD image” mode in Rufus if prompted.</td></tr>
+</table>
+
+### 4. Boot from the USB stick
+
+1. Plug the stick into the machine and **reboot**.
+2. Open the **boot menu** — usually `F12`, `F10`, `F9`, `Esc`, or `Del` during the splash.
+3. Pick the USB entry. On a **UEFI** machine you may need to disable Secure Boot once (the image is not Secure-Boot signed).
+
+The boot menu offers three ways in:
+
+| Entry | What it does |
+| --- | --- |
+| **Live system** | Boots the full desktop without touching your disk — auto-logs into LXQt. |
+| **Start installer** | Launches the Debian installer (graphical or textual) to install DeepBlue to disk. |
+| **Live system (failsafe)** | Live boot with conservative kernel options, if the normal one has trouble. |
+
+> [!NOTE]
+> The live session logs in automatically as **`deepblue`** (password `live`, member of `sudo`). Nothing is written to your disk until you run the installer.
+
+### 5. Try it in a virtual machine (no USB needed)
+
+Any of these work — give it **2 GB RAM** and **20 GB disk**:
+
+<table>
+<tr><th align="left">Tool</th><th align="left">How</th></tr>
+<tr><td><b>QEMU (Linux/macOS)</b></td><td>
+
+```sh
+qemu-system-x86_64 -m 2048 -smp 2 -enable-kvm \
+  -cdrom DeepBlue-Linux-1.0-amd64.iso -boot d
+```
+
+(drop `-enable-kvm` on macOS/Windows; it will run under TCG)
+
+</td></tr>
+<tr><td><b>VirtualBox</b></td><td>New VM → Linux / Debian 64-bit → attach the ISO as the optical disk → Start.</td></tr>
+<tr><td><b>VMware / Hyper-V</b></td><td>New VM → attach the ISO → boot. UEFI or BIOS both work.</td></tr>
+</table>
+
+### 6. Install to disk
+
+From the live session, double-click **Install DeepBlue** on the desktop (or pick **Start installer** at the boot menu), then follow the Debian installer: language → location → keyboard → disk → user → install. On first boot you get the installed DeepBlue system, which updates from its own signed archive.
 
 ---
 
@@ -179,8 +265,12 @@ Everything below was exercised on the built image (evidence in [`docs/`](docs/))
 | Live user | `deepblue` / `live` |
 | Hostname | `deepblue` |
 
-The built ISO is intentionally **not** committed (it is large and fully
-reproducible from this source). Build it with `./build.sh`.
+The built ISO is intentionally **not** committed to git (it is large); it is
+published as a **release asset** and is fully reproducible from this source.
+
+**[Download the latest ISO](https://github.com/NSKWeb/deepblue-linux/releases/latest)** �
+[all releases](https://github.com/NSKWeb/deepblue-linux/releases) �
+[how to flash &amp; boot](#-download--run)
 
 ---
 
